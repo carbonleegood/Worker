@@ -39,6 +39,7 @@ FP_CallIdentify CallIdentify;
 FP_AutoSkillUp AutoSkillUp;
 FP_IsBuffExists IsBuffExists;
 FP_IsItemOnMouse IsItemOnMouse;
+FP_GetDescription GetDescription;
 int DrawMap(unsigned char* p, DWORD x, DWORD y);
 extern TCHAR szModulePath[MAX_PATH];
 #ifdef VM_PROTECT
@@ -128,6 +129,7 @@ bool InitGobalData()
 
 	CallIdentify = (FP_CallIdentify)(*(p + 218));
 
+	GetDescription = (FP_GetDescription)(*(p + 219));
 	
 	SetIsDLl(TRUE);
 #ifdef VM_PROTECT

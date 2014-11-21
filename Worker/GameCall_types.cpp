@@ -1229,6 +1229,388 @@ void swap(ItemInfo &a, ItemInfo &b) {
   swap(a.__isset, b.__isset);
 }
 
+const char* ItemFullInfo::ascii_fingerprint = "F60CE2EC57FBC4158ADA3951B8A047B5";
+const uint8_t ItemFullInfo::binary_fingerprint[16] = {0xF6,0x0C,0xE2,0xEC,0x57,0xFB,0xC4,0x15,0x8A,0xDA,0x39,0x51,0xB8,0xA0,0x47,0xB5};
+
+uint32_t ItemFullInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->ObjPtr);
+          this->__isset.ObjPtr = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->ID);
+          this->__isset.ID = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->ServiceID);
+          this->__isset.ServiceID = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->WinID);
+          this->__isset.WinID = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->BagObjPtr);
+          this->__isset.BagObjPtr = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 6:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Color);
+          this->__isset.Color = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 7:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Count);
+          this->__isset.Count = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 8:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->MaxCount);
+          this->__isset.MaxCount = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 9:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Width);
+          this->__isset.Width = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 10:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Height);
+          this->__isset.Height = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 11:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Left);
+          this->__isset.Left = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 12:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Top);
+          this->__isset.Top = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 13:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Type);
+          this->__isset.Type = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 14:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->Socket);
+          this->__isset.Socket = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 15:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->SocketConnect);
+          this->__isset.SocketConnect = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 16:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->ThreeColorSocket);
+          this->__isset.ThreeColorSocket = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 17:
+        if (ftype == ::apache::thrift::protocol::T_BOOL) {
+          xfer += iprot->readBool(this->NeedIdentify);
+          this->__isset.NeedIdentify = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 18:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->Quality);
+          this->__isset.Quality = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 19:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->Name.clear();
+            uint32_t _size48;
+            ::apache::thrift::protocol::TType _etype51;
+            xfer += iprot->readListBegin(_etype51, _size48);
+            this->Name.resize(_size48);
+            uint32_t _i52;
+            for (_i52 = 0; _i52 < _size48; ++_i52)
+            {
+              xfer += iprot->readByte(this->Name[_i52]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.Name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 20:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->TypeName.clear();
+            uint32_t _size53;
+            ::apache::thrift::protocol::TType _etype56;
+            xfer += iprot->readListBegin(_etype56, _size53);
+            this->TypeName.resize(_size53);
+            uint32_t _i57;
+            for (_i57 = 0; _i57 < _size53; ++_i57)
+            {
+              xfer += iprot->readByte(this->TypeName[_i57]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.TypeName = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 21:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->DescribInfo.clear();
+            uint32_t _size58;
+            ::apache::thrift::protocol::TType _etype61;
+            xfer += iprot->readListBegin(_etype61, _size58);
+            this->DescribInfo.resize(_size58);
+            uint32_t _i62;
+            for (_i62 = 0; _i62 < _size58; ++_i62)
+            {
+              xfer += iprot->readByte(this->DescribInfo[_i62]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.DescribInfo = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t ItemFullInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("ItemFullInfo");
+
+  xfer += oprot->writeFieldBegin("ObjPtr", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->ObjPtr);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ID", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->ID);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ServiceID", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->ServiceID);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("WinID", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->WinID);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("BagObjPtr", ::apache::thrift::protocol::T_I32, 5);
+  xfer += oprot->writeI32(this->BagObjPtr);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Color", ::apache::thrift::protocol::T_I16, 6);
+  xfer += oprot->writeI16(this->Color);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Count", ::apache::thrift::protocol::T_I16, 7);
+  xfer += oprot->writeI16(this->Count);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("MaxCount", ::apache::thrift::protocol::T_I16, 8);
+  xfer += oprot->writeI16(this->MaxCount);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Width", ::apache::thrift::protocol::T_I16, 9);
+  xfer += oprot->writeI16(this->Width);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Height", ::apache::thrift::protocol::T_I16, 10);
+  xfer += oprot->writeI16(this->Height);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Left", ::apache::thrift::protocol::T_I16, 11);
+  xfer += oprot->writeI16(this->Left);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Top", ::apache::thrift::protocol::T_I16, 12);
+  xfer += oprot->writeI16(this->Top);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Type", ::apache::thrift::protocol::T_I16, 13);
+  xfer += oprot->writeI16(this->Type);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Socket", ::apache::thrift::protocol::T_I16, 14);
+  xfer += oprot->writeI16(this->Socket);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SocketConnect", ::apache::thrift::protocol::T_I16, 15);
+  xfer += oprot->writeI16(this->SocketConnect);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("ThreeColorSocket", ::apache::thrift::protocol::T_BOOL, 16);
+  xfer += oprot->writeBool(this->ThreeColorSocket);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("NeedIdentify", ::apache::thrift::protocol::T_BOOL, 17);
+  xfer += oprot->writeBool(this->NeedIdentify);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Quality", ::apache::thrift::protocol::T_I32, 18);
+  xfer += oprot->writeI32(this->Quality);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Name", ::apache::thrift::protocol::T_LIST, 19);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->Name.size()));
+    std::vector<int8_t> ::const_iterator _iter63;
+    for (_iter63 = this->Name.begin(); _iter63 != this->Name.end(); ++_iter63)
+    {
+      xfer += oprot->writeByte((*_iter63));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("TypeName", ::apache::thrift::protocol::T_LIST, 20);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->TypeName.size()));
+    std::vector<int8_t> ::const_iterator _iter64;
+    for (_iter64 = this->TypeName.begin(); _iter64 != this->TypeName.end(); ++_iter64)
+    {
+      xfer += oprot->writeByte((*_iter64));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("DescribInfo", ::apache::thrift::protocol::T_LIST, 21);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->DescribInfo.size()));
+    std::vector<int8_t> ::const_iterator _iter65;
+    for (_iter65 = this->DescribInfo.begin(); _iter65 != this->DescribInfo.end(); ++_iter65)
+    {
+      xfer += oprot->writeByte((*_iter65));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(ItemFullInfo &a, ItemFullInfo &b) {
+  using ::std::swap;
+  swap(a.ObjPtr, b.ObjPtr);
+  swap(a.ID, b.ID);
+  swap(a.ServiceID, b.ServiceID);
+  swap(a.WinID, b.WinID);
+  swap(a.BagObjPtr, b.BagObjPtr);
+  swap(a.Color, b.Color);
+  swap(a.Count, b.Count);
+  swap(a.MaxCount, b.MaxCount);
+  swap(a.Width, b.Width);
+  swap(a.Height, b.Height);
+  swap(a.Left, b.Left);
+  swap(a.Top, b.Top);
+  swap(a.Type, b.Type);
+  swap(a.Socket, b.Socket);
+  swap(a.SocketConnect, b.SocketConnect);
+  swap(a.ThreeColorSocket, b.ThreeColorSocket);
+  swap(a.NeedIdentify, b.NeedIdentify);
+  swap(a.Quality, b.Quality);
+  swap(a.Name, b.Name);
+  swap(a.TypeName, b.TypeName);
+  swap(a.DescribInfo, b.DescribInfo);
+  swap(a.__isset, b.__isset);
+}
+
 const char* TrophyBaseInfo::ascii_fingerprint = "20CDC9D979DE694980EA2466496D8E68";
 const uint8_t TrophyBaseInfo::binary_fingerprint[16] = {0x20,0xCD,0xC9,0xD9,0x79,0xDE,0x69,0x49,0x80,0xEA,0x24,0x66,0x49,0x6D,0x8E,0x68};
 
@@ -1432,14 +1814,14 @@ uint32_t TrophyInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->Name.clear();
-            uint32_t _size48;
-            ::apache::thrift::protocol::TType _etype51;
-            xfer += iprot->readListBegin(_etype51, _size48);
-            this->Name.resize(_size48);
-            uint32_t _i52;
-            for (_i52 = 0; _i52 < _size48; ++_i52)
+            uint32_t _size66;
+            ::apache::thrift::protocol::TType _etype69;
+            xfer += iprot->readListBegin(_etype69, _size66);
+            this->Name.resize(_size66);
+            uint32_t _i70;
+            for (_i70 = 0; _i70 < _size66; ++_i70)
             {
-              xfer += iprot->readByte(this->Name[_i52]);
+              xfer += iprot->readByte(this->Name[_i70]);
             }
             xfer += iprot->readListEnd();
           }
@@ -1511,10 +1893,10 @@ uint32_t TrophyInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("Name", ::apache::thrift::protocol::T_LIST, 12);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->Name.size()));
-    std::vector<int8_t> ::const_iterator _iter53;
-    for (_iter53 = this->Name.begin(); _iter53 != this->Name.end(); ++_iter53)
+    std::vector<int8_t> ::const_iterator _iter71;
+    for (_iter71 = this->Name.begin(); _iter71 != this->Name.end(); ++_iter71)
     {
-      xfer += oprot->writeByte((*_iter53));
+      xfer += oprot->writeByte((*_iter71));
     }
     xfer += oprot->writeListEnd();
   }

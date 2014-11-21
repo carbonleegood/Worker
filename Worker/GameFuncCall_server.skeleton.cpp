@@ -311,6 +311,10 @@ public:
 
 	void GetPlayerPos(Pos& _return) 
 	{
+
+#ifndef NO_DEBUG
+			::OutputDebugString(L"GetPlayerPos\n");
+#endif
 		// Your implementation goes here
 		//printf("GetPlayerPos\n");
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetPlayerPos, NULL);
@@ -339,6 +343,9 @@ public:
 	}
 	void CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType) 
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"CastTargetSkill\n");
+#endif
 		// Your implementation goes here
 		SkillTargetObjPtr = TargetObjPtr;
 		SkillNum = skillNum;
@@ -347,17 +354,23 @@ public:
 	}
 	std::set<Point> TrophyFilter;
 	std::set<wstring> PollutantGateName;
+	std::map<wstring,int> PriorMonsterName;
 	void GetRoundList(std::vector<ObjInfo> & _return)
 	{
 		// Your implementation goes here
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetRoundList\n");
+#endif
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
 		RoundObjInfo* pTempRoundList = pRoundList;
 		byte type = 0;
+		
 		for (int i = 0; i < 3000; ++i)
 		{
 			if (!pTempRoundList->mem2)
 				break;
 			//暂时只保留了怪物
+			int nPrior = 0;
 			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
 			{
 				++pTempRoundList;
@@ -386,6 +399,16 @@ public:
 						}
 					}
 					type = byMonsterType;
+
+					if (pTempRoundList->HP > 0)
+					{
+						wstring strName = (wchar_t*)pTempRoundList->Name;
+						auto iter = PriorMonsterName.find(strName);
+						if (iter != PriorMonsterName.end())
+						{
+							nPrior = iter->second;
+						}
+					}
 				}
 				else if (IsBox(pTempRoundList->InterfaceName))
 				{
@@ -478,6 +501,7 @@ public:
 			temp.X = pTempRoundList->X2;
 			temp.Y = pTempRoundList->Y2;
 			temp.Color=pTempRoundList->Color;
+			temp.Color |= nPrior;
 #ifndef NO_DEBUG
 			for (int j = 0; j < 64; j += 2)
 			{
@@ -556,6 +580,9 @@ public:
 	}
 	void GetPlayerInfo(PlayerInfo& _return)
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetPlayerInfo\n");
+#endif
 		// Your implementation goes here
 	//	printf("GetPlayerInfo\n");
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetPlayerInfo, NULL);
@@ -594,6 +621,9 @@ public:
 	}
 	void GetMapData(MapInfo& _return) 
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetMapData\n");
+#endif
 		// Your implementation goes here
 		//
 		//SendMessage(hGameWnd, WM_LG_CALL, F_GetMapData, NULL);
@@ -676,6 +706,9 @@ public:
 	}
 	void GetBagItemSpaceInfo(std::vector<ItemSpaceInfo> & _return) 
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetBagItemSpaceInfo\n");
+#endif
 		ContainerType = 0;
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
 		for (int i = 0; i < dwBagItemCount; ++i)
@@ -690,6 +723,9 @@ public:
 	}
 	void GetContainerItemList(std::vector<ItemInfo> & _return, const int32_t GetType)
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetContainerItemList\n");
+#endif
 		// Your implementation goes here
 		ContainerType = GetType;
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
@@ -758,119 +794,7 @@ public:
 					break;
 				}
 			}
-			//BYTE connect[6] = { 0 };
-			//int begin = 0;
-			//for (int d = 0; d<6; ++d)
-			//{
-			//	if (pBag->Items[i].SocketsContact[d] == 0)
-			//		break;
-
-			//	if (pBag->Items[i].SocketsContact[d]>temp.SocketConnect)
-			//		temp.SocketConnect = pBag->Items[i].SocketsContact[d];
-			//	for (int j = begin; j < (pBag->Items[i].SocketsContact[d] + begin - 1); ++j)
-			//	{
-			//		connect[j] = 1;
-			//	}
-			//	connect[pBag->Items[i].SocketsContact[d] + begin - 1] = 0;
-			//	begin = pBag->Items[i].SocketsContact[d] + d;
-			//}
-
-			//temp.ThreeColorSocket = false;
-			//for (int j = 0; j<6; ++j)
-			//{
-
-			//	switch (pBag->Items[i].Sockets[j])
-			//	{
-			//	case 1:
-			//	case 2:
-			//	case 3:
-			//		++(temp.Socket);
-			//		break;
-			//	}
-			//	if (j > 1)
-			//	{
-			//		BYTE SocketColor = 0;
-			//		//查看前2个槽和连接
-			//		switch (pBag->Items[i].Sockets[j])
-			//		{
-			//		case 1:
-			//			SocketColor |= 1;
-			//			break;
-			//		case 2:
-			//			SocketColor |= 2;
-			//			break;
-			//		case 3:
-			//			SocketColor |= 4;
-			//			break;
-			//		}
-			//		switch (pBag->Items[i].Sockets[j - 1])
-			//		{
-			//		case 1:
-			//			SocketColor |= 1;
-			//			break;
-			//		case 2:
-			//			SocketColor |= 2;
-			//			break;
-			//		case 3:
-			//			SocketColor |= 4;
-			//			break;
-			//		}
-			//		switch (pBag->Items[i].Sockets[j - 2])
-			//		{
-			//		case 1:
-			//			SocketColor |= 1;
-			//			break;
-			//		case 2:
-			//			SocketColor |= 2;
-			//			break;
-			//		case 3:
-			//			SocketColor |= 4;
-			//			break;
-			//		}
-			//		if (connect[j - 1] == 1 && connect[j - 2] == 1)
-			//		{
-			//			if (SocketColor == 7)
-			//				temp.ThreeColorSocket = true;
-			//		}
-			//	}
-			//}
-		/*	BYTE SocketColor = 0;
-			for (int j = 0; j<6; ++j)
-			{
-				switch (pBag->Items[i].Sockets[j])
-				{
-				case 1:
-					++(temp.Socket);
-					SocketColor |= 1;
-					break;
-				case 2:
-					++(temp.Socket);
-					SocketColor |= 2;
-					break;
-				case 3:
-					++(temp.Socket);
-					SocketColor |= 4;
-					break;
-				}
-			}
-			if (SocketColor == 7)
-				temp.ThreeColorSocket =true;
-			else
-				temp.ThreeColorSocket = false;
-			temp.SocketConnect = 0;
-			for (int j = 0; j<6; ++j)
-			{
-				if (pBag->Items[i].SocketsContact[j]>temp.SocketConnect)
-					temp.SocketConnect = pBag->Items[i].SocketsContact[j];
-			}*/
 			
-			/*for (int j = 0; j < 64; j += 2)
-			{
-				if (pBag->Items[i].Name[j] == 0 && pBag->Items[i].Name[j + 1] == 0)
-					break;
-				temp.Name.push_back(pBag->Items[i].Name[j]);
-				temp.Name.push_back(pBag->Items[i].Name[j + 1]);
-			}*/
 			if (IsSkillStoneType(pBag->Items[i].InterfaceName))//1
 			{
 				temp.Type = byTrophy_SkillStone;
@@ -942,11 +866,14 @@ public:
 #endif		
 			_return.push_back(temp);
 		}
-	//	printf("GetItemList\n");
+
 	}
 
 	void GetCurrentMapInfo(WaypointInfo& _return) 
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetCurrentMapInfo\n");
+#endif
 		//printf("GetCurrentMapID\n");
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetMapID, NULL);
 		_return.Mem = CurMapInfo.Mem;
@@ -969,15 +896,18 @@ public:
 
 	int32_t GetCurrentMapID() 
 	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetCurrentMapID\n");
+#endif
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetMapID, NULL);
 		return  CurMapInfo.ID;
 	}
 
 	void GetTrophyInfo(TrophyInfo& _return, const int32_t TrophyObjPtr) 
 	{
-		// Your implementation goes here
-		//printf("GetTrophyInfo\n");
-		//_return
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetTrophyInfo\n");
+#endif
 		NolootTrophyObjPtr = TrophyObjPtr;
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetTrophyInfo, NULL);
 		_return.ObjPtr = TrophyObjPtr;
@@ -1061,26 +991,16 @@ public:
 	}
 	void GetTrophyList(std::vector<TrophyInfo> & _return, const std::vector<TrophyBaseInfo> & TrophyIDList)
 	{
-		// Your implementation goes here
-		//printf("GetTrophyList\n");
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetTrophyList\n");
+#endif
+	//	::OutputDebugString(L"GetTrophyList\n");
 		set<Point> NeedLootPos;
 		for (auto item : TrophyIDList)
 		{
 			
 			NolootTrophyObjPtr = item.ObjPtr;
 			SendMessage(hGameWnd, WM_LG_CALL, F_GetTrophyInfo, NULL);
-
-			//const char byTrophy_SkillStone = 1;//技能石
-			//const char byTrophy_Currency = 2;//卷轴宝石
-			//const char byTrophy_Flask = 3;//血瓶
-			//const char byTrophy_Armour = 4;//装备
-			//const char byTrophy_Ring = 5;//戒指
-			//const char byTrophy_Amulet = 6;//项链
-			//const char byTrophy_Belt = 10;//腰带
-			//const char byTrophy_Weapon = 7;//武器
-			//const char byTrophy_Quiver = 8;//箭包
-			//const char byTrophy_QuestItem = 9;//任务物品
-			
 
 			int nType = 0;
 			
@@ -1586,6 +1506,25 @@ public:
 		//	MessageBox(name.c_str());
 		} while (!file.eof());
 		file.close();
+		//优先攻击怪物
+		PriorMonsterName.clear();
+		strPath = szModulePath;
+		strPath += L"\\MonsterName.txt";
+		file.open(strPath, ios::in | ios::binary);
+		do
+		{
+			wstring name;
+			wchar_t buff[11] = { 0 };
+			file.read((char*)buff, 22);
+			name = buff;
+			char* p = (char*)buff;
+			int nPrior = p[20];
+			if (name.size() > 0)
+				PriorMonsterName.insert(std::make_pair(name,nPrior));
+			//	MessageBox(name.c_str());
+		} while (!file.eof());
+		file.close();
+
 		// Your implementation goes here
 	//	printf("ReloadPollutantGateName\n");
 		/*PollutantGateName.clear();
@@ -1738,6 +1677,7 @@ public:
 				return;
 			}
 		}
+		OutputDebugString(L"HitKey\n");
 	//	MessageBox(NULL, L"1111", NULL, MB_OK);
 		switch (Key)
 		{
@@ -1805,6 +1745,178 @@ public:
 		if (nBuffExist == 1)
 			return true;
 		return false;
+	}
+
+	int32_t GetItemDescription(const int32_t ItemObjPtr)
+	{
+		// Your implementation goes here
+	//	printf("GetItemDescription\n");
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetItemDescrib, ItemObjPtr);
+		return 0;
+	}
+
+	void GetBagItemFullInfo(std::vector<ItemFullInfo> & _return) 
+	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetBagItemFullInfo\n");
+#endif
+		// Your implementation goes here
+		ContainerType = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
+		for (int i = 0; i < dwBagItemCount; ++i)
+		{
+			GetItemDescription(pBag->Items[i].ObjPtr);
+		}
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
+		for (int i = 0; i < dwBagItemCount; ++i)
+		{
+			ItemFullInfo temp;
+			temp.WinID = pBag->WinID;
+			temp.BagObjPtr = pBag->Mem;////////////这里要注意
+			temp.ObjPtr = pBag->Items[i].ObjPtr;
+			temp.ID = pBag->Items[i].ID;
+			temp.Color = pBag->Items[i].Color;
+			temp.Count = pBag->Items[i].Count;
+			temp.MaxCount = pBag->Items[i].MaxCount;
+			temp.ServiceID = pBag->Items[i].ServiceID;
+			temp.Left = pBag->Items[i].Left;
+			temp.Top = pBag->Items[i].Top;
+			temp.Width = pBag->Items[i].Width;
+			temp.Height = pBag->Items[i].Height;
+			temp.Quality = pBag->Items[i].Quality;
+			if (pBag->Items[i].IsEquipment == 1 && pBag->Items[i].IsIdentity == 0)
+				temp.NeedIdentify = true;
+			else
+				temp.NeedIdentify = false;
+
+			temp.SocketConnect = 0;
+			temp.Socket = 0;
+			int begin = 0;
+			for (int d = 0; d<6; ++d)
+			{
+				if (pBag->Items[i].SocketsContact[d] == 0)
+					break;
+				if (pBag->Items[i].SocketsContact[d]>temp.SocketConnect)
+				{
+					temp.SocketConnect = pBag->Items[i].SocketsContact[d];
+				}
+				if (pBag->Items[i].SocketsContact[d] > 2)//检测三色孔
+				{
+					int SocketColor = 0;
+					for (int j = begin; j <= (pBag->Items[i].SocketsContact[d] + begin); ++j)
+					{
+						switch (pBag->Items[i].Sockets[j])
+						{
+						case 1:
+							SocketColor |= 1;
+							break;
+						case 2:
+							SocketColor |= 2;
+							break;
+						case 3:
+							SocketColor |= 4;
+							break;
+						}
+					}
+					if (SocketColor == 7)
+						temp.ThreeColorSocket = true;
+				}
+				begin += pBag->Items[i].SocketsContact[d];
+			}
+			for (int j = 0; j < 6; ++j)
+			{
+				switch (pBag->Items[i].Sockets[j])
+				{
+				case 1:
+				case 2:
+				case 3:
+					++(temp.Socket);
+					break;
+				}
+			}
+
+			if (IsSkillStoneType(pBag->Items[i].InterfaceName))//1
+			{
+				temp.Type = byTrophy_SkillStone;
+			}
+			else if (IsCurrencyType(pBag->Items[i].InterfaceName))//2
+			{
+				CStringW strName = (wchar_t*)(pBag->Items[i].Name);
+				if (strName == L"傳送卷軸" || strName == L"知識卷軸")
+				{
+					temp.Type = byTrophy_Currency;
+				}
+				else
+					temp.Type = byTrophy_Money;
+			}
+			else if (IsFlaskType(pBag->Items[i].InterfaceName))//3
+			{
+				temp.Type = byTrophy_Flask;
+			}
+			else if (IsArmourType(pBag->Items[i].InterfaceName))//4
+			{
+				temp.Type = byTrophy_Armour;
+			}
+			else if (IsRingType(pBag->Items[i].InterfaceName))//5
+			{
+				temp.Type = byTrophy_Ring;
+			}
+			else if (IsAmuletType(pBag->Items[i].InterfaceName))//6
+			{
+				temp.Type = byTrophy_Amulet;
+			}
+			else if (IsWeaponType(pBag->Items[i].InterfaceName))//7
+			{
+				temp.Type = byTrophy_Weapon;
+			}
+			else if (IsQuestItemType(pBag->Items[i].InterfaceName))//8
+			{
+				temp.Type = byTrophy_QuestItem;
+			}
+			else if (IsBeltType(pBag->Items[i].InterfaceName))//9
+			{
+				temp.Type = byTrophy_Belt;
+			}
+			else if (IsQuiverType(pBag->Items[i].InterfaceName))//10
+			{
+				temp.Type = byTrophy_Weapon;//箭包暂时算武器
+			}
+			else if (IsMapsType(pBag->Items[i].InterfaceName))
+			{
+				temp.Type = byTrophy_Maps;//地图
+			}
+			else
+				temp.Type = UnknowType;
+
+			for (int j = 0; j < 64; j += 2)
+			{
+				if (pBag->Items[i].Name[j] == 0 && pBag->Items[i].Name[j + 1] == 0)
+					break;
+				temp.Name.push_back(pBag->Items[i].Name[j]);
+				temp.Name.push_back(pBag->Items[i].Name[j + 1]);
+			}
+//#ifndef NO_DEBUG
+			for (int j = 0; j < 192; j += 2)
+			{
+				if (pBag->Items[i].InterfaceName[j] == 0 && pBag->Items[i].InterfaceName[j + 1] == 0)
+					break;
+				temp.TypeName.push_back(pBag->Items[i].InterfaceName[j]);
+				temp.TypeName.push_back(pBag->Items[i].InterfaceName[j + 1]);
+			}
+//#endif		
+			for (int k = 0; k < 14; ++k)
+			{
+				for (int j = 0; j < 32; j += 2)
+				{
+					if (pBag->Items[i].StatDescriptions[k][j] == 0 && pBag->Items[i].StatDescriptions[k][j + 1] == 0)
+						break;
+					temp.DescribInfo.push_back(pBag->Items[i].StatDescriptions[k][j]);
+					temp.DescribInfo.push_back(pBag->Items[i].StatDescriptions[k][j + 1]);
+				}
+			//	temp.DescribInfo.push_back()
+			}
+			_return.push_back(temp);
+		}
 	}
 };
 

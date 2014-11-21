@@ -129,6 +129,9 @@ struct SItemInfo
 	BYTE IsEquipment; // 是否是装备 0=否  1=是
 	BYTE IsIdentity; // 是否未鉴定 0=未鉴定 1=已鉴定
 	ULONG Quality; // 品质
+	ULONG Stats[20];
+	// 这个是鼠标经过物品后已经刷新的描述文本，若要读这里需要调CALL
+	BYTE StatDescriptions[14][32];  //14x32字节的结构
 };
 #pragma pack (pop)
 
@@ -173,6 +176,8 @@ extern int IdentityItemServiceID;
 
 extern int nItemOnMouse;
 extern int nBuffExist;
+
+extern  int DescribItemObjPtr;
 
 struct Point
 {

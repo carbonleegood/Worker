@@ -56,3 +56,5 @@ int ContainerType;
 
  int nItemOnMouse;
  int nBuffExist;
+
+ int DescribItemObjPtr;

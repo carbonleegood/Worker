@@ -117,6 +117,9 @@ void DispatchCall(WPARAM wParam, LPARAM lParam)
 		case F_BuffExist:
 			nBuffExist = IsBuffExists(lParam);
 			break;
+		case F_GetItemDescrib:
+			nRet = GetDescription(lParam);
+			break;
 		}
 	}
 	__except (1)

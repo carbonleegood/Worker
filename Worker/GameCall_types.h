@@ -702,6 +702,209 @@ class ItemInfo {
 
 void swap(ItemInfo &a, ItemInfo &b);
 
+typedef struct _ItemFullInfo__isset {
+  _ItemFullInfo__isset() : ObjPtr(false), ID(false), ServiceID(false), WinID(false), BagObjPtr(false), Color(false), Count(false), MaxCount(false), Width(false), Height(false), Left(false), Top(false), Type(false), Socket(false), SocketConnect(false), ThreeColorSocket(false), NeedIdentify(false), Quality(false), Name(false), TypeName(false), DescribInfo(false) {}
+  bool ObjPtr;
+  bool ID;
+  bool ServiceID;
+  bool WinID;
+  bool BagObjPtr;
+  bool Color;
+  bool Count;
+  bool MaxCount;
+  bool Width;
+  bool Height;
+  bool Left;
+  bool Top;
+  bool Type;
+  bool Socket;
+  bool SocketConnect;
+  bool ThreeColorSocket;
+  bool NeedIdentify;
+  bool Quality;
+  bool Name;
+  bool TypeName;
+  bool DescribInfo;
+} _ItemFullInfo__isset;
+
+class ItemFullInfo {
+ public:
+
+  static const char* ascii_fingerprint; // = "F60CE2EC57FBC4158ADA3951B8A047B5";
+  static const uint8_t binary_fingerprint[16]; // = {0xF6,0x0C,0xE2,0xEC,0x57,0xFB,0xC4,0x15,0x8A,0xDA,0x39,0x51,0xB8,0xA0,0x47,0xB5};
+
+  ItemFullInfo() : ObjPtr(0), ID(0), ServiceID(0), WinID(0), BagObjPtr(0), Color(0), Count(0), MaxCount(0), Width(0), Height(0), Left(0), Top(0), Type(0), Socket(0), SocketConnect(0), ThreeColorSocket(0), NeedIdentify(0), Quality(0) {
+  }
+
+  virtual ~ItemFullInfo() throw() {}
+
+  int32_t ObjPtr;
+  int32_t ID;
+  int32_t ServiceID;
+  int32_t WinID;
+  int32_t BagObjPtr;
+  int16_t Color;
+  int16_t Count;
+  int16_t MaxCount;
+  int16_t Width;
+  int16_t Height;
+  int16_t Left;
+  int16_t Top;
+  int16_t Type;
+  int16_t Socket;
+  int16_t SocketConnect;
+  bool ThreeColorSocket;
+  bool NeedIdentify;
+  int32_t Quality;
+  std::vector<int8_t>  Name;
+  std::vector<int8_t>  TypeName;
+  std::vector<int8_t>  DescribInfo;
+
+  _ItemFullInfo__isset __isset;
+
+  void __set_ObjPtr(const int32_t val) {
+    ObjPtr = val;
+  }
+
+  void __set_ID(const int32_t val) {
+    ID = val;
+  }
+
+  void __set_ServiceID(const int32_t val) {
+    ServiceID = val;
+  }
+
+  void __set_WinID(const int32_t val) {
+    WinID = val;
+  }
+
+  void __set_BagObjPtr(const int32_t val) {
+    BagObjPtr = val;
+  }
+
+  void __set_Color(const int16_t val) {
+    Color = val;
+  }
+
+  void __set_Count(const int16_t val) {
+    Count = val;
+  }
+
+  void __set_MaxCount(const int16_t val) {
+    MaxCount = val;
+  }
+
+  void __set_Width(const int16_t val) {
+    Width = val;
+  }
+
+  void __set_Height(const int16_t val) {
+    Height = val;
+  }
+
+  void __set_Left(const int16_t val) {
+    Left = val;
+  }
+
+  void __set_Top(const int16_t val) {
+    Top = val;
+  }
+
+  void __set_Type(const int16_t val) {
+    Type = val;
+  }
+
+  void __set_Socket(const int16_t val) {
+    Socket = val;
+  }
+
+  void __set_SocketConnect(const int16_t val) {
+    SocketConnect = val;
+  }
+
+  void __set_ThreeColorSocket(const bool val) {
+    ThreeColorSocket = val;
+  }
+
+  void __set_NeedIdentify(const bool val) {
+    NeedIdentify = val;
+  }
+
+  void __set_Quality(const int32_t val) {
+    Quality = val;
+  }
+
+  void __set_Name(const std::vector<int8_t> & val) {
+    Name = val;
+  }
+
+  void __set_TypeName(const std::vector<int8_t> & val) {
+    TypeName = val;
+  }
+
+  void __set_DescribInfo(const std::vector<int8_t> & val) {
+    DescribInfo = val;
+  }
+
+  bool operator == (const ItemFullInfo & rhs) const
+  {
+    if (!(ObjPtr == rhs.ObjPtr))
+      return false;
+    if (!(ID == rhs.ID))
+      return false;
+    if (!(ServiceID == rhs.ServiceID))
+      return false;
+    if (!(WinID == rhs.WinID))
+      return false;
+    if (!(BagObjPtr == rhs.BagObjPtr))
+      return false;
+    if (!(Color == rhs.Color))
+      return false;
+    if (!(Count == rhs.Count))
+      return false;
+    if (!(MaxCount == rhs.MaxCount))
+      return false;
+    if (!(Width == rhs.Width))
+      return false;
+    if (!(Height == rhs.Height))
+      return false;
+    if (!(Left == rhs.Left))
+      return false;
+    if (!(Top == rhs.Top))
+      return false;
+    if (!(Type == rhs.Type))
+      return false;
+    if (!(Socket == rhs.Socket))
+      return false;
+    if (!(SocketConnect == rhs.SocketConnect))
+      return false;
+    if (!(ThreeColorSocket == rhs.ThreeColorSocket))
+      return false;
+    if (!(NeedIdentify == rhs.NeedIdentify))
+      return false;
+    if (!(Quality == rhs.Quality))
+      return false;
+    if (!(Name == rhs.Name))
+      return false;
+    if (!(TypeName == rhs.TypeName))
+      return false;
+    if (!(DescribInfo == rhs.DescribInfo))
+      return false;
+    return true;
+  }
+  bool operator != (const ItemFullInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ItemFullInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+void swap(ItemFullInfo &a, ItemFullInfo &b);
+
 typedef struct _TrophyBaseInfo__isset {
   _TrophyBaseInfo__isset() : ObjPtr(false), X(false), Y(false) {}
   bool ObjPtr;

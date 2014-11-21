@@ -1378,14 +1378,14 @@ uint32_t GameFuncCall_GetRoundList_result::read(::apache::thrift::protocol::TPro
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size54;
-            ::apache::thrift::protocol::TType _etype57;
-            xfer += iprot->readListBegin(_etype57, _size54);
-            this->success.resize(_size54);
-            uint32_t _i58;
-            for (_i58 = 0; _i58 < _size54; ++_i58)
+            uint32_t _size72;
+            ::apache::thrift::protocol::TType _etype75;
+            xfer += iprot->readListBegin(_etype75, _size72);
+            this->success.resize(_size72);
+            uint32_t _i76;
+            for (_i76 = 0; _i76 < _size72; ++_i76)
             {
-              xfer += this->success[_i58].read(iprot);
+              xfer += this->success[_i76].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1416,10 +1416,10 @@ uint32_t GameFuncCall_GetRoundList_result::write(::apache::thrift::protocol::TPr
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<ObjInfo> ::const_iterator _iter59;
-      for (_iter59 = this->success.begin(); _iter59 != this->success.end(); ++_iter59)
+      std::vector<ObjInfo> ::const_iterator _iter77;
+      for (_iter77 = this->success.begin(); _iter77 != this->success.end(); ++_iter77)
       {
-        xfer += (*_iter59).write(oprot);
+        xfer += (*_iter77).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1454,14 +1454,14 @@ uint32_t GameFuncCall_GetRoundList_presult::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size60;
-            ::apache::thrift::protocol::TType _etype63;
-            xfer += iprot->readListBegin(_etype63, _size60);
-            (*(this->success)).resize(_size60);
-            uint32_t _i64;
-            for (_i64 = 0; _i64 < _size60; ++_i64)
+            uint32_t _size78;
+            ::apache::thrift::protocol::TType _etype81;
+            xfer += iprot->readListBegin(_etype81, _size78);
+            (*(this->success)).resize(_size78);
+            uint32_t _i82;
+            for (_i82 = 0; _i82 < _size78; ++_i82)
             {
-              xfer += (*(this->success))[_i64].read(iprot);
+              xfer += (*(this->success))[_i82].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1551,14 +1551,14 @@ uint32_t GameFuncCall_GetRoundListTest_result::read(::apache::thrift::protocol::
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size65;
-            ::apache::thrift::protocol::TType _etype68;
-            xfer += iprot->readListBegin(_etype68, _size65);
-            this->success.resize(_size65);
-            uint32_t _i69;
-            for (_i69 = 0; _i69 < _size65; ++_i69)
+            uint32_t _size83;
+            ::apache::thrift::protocol::TType _etype86;
+            xfer += iprot->readListBegin(_etype86, _size83);
+            this->success.resize(_size83);
+            uint32_t _i87;
+            for (_i87 = 0; _i87 < _size83; ++_i87)
             {
-              xfer += this->success[_i69].read(iprot);
+              xfer += this->success[_i87].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1589,10 +1589,10 @@ uint32_t GameFuncCall_GetRoundListTest_result::write(::apache::thrift::protocol:
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<ObjInfo> ::const_iterator _iter70;
-      for (_iter70 = this->success.begin(); _iter70 != this->success.end(); ++_iter70)
+      std::vector<ObjInfo> ::const_iterator _iter88;
+      for (_iter88 = this->success.begin(); _iter88 != this->success.end(); ++_iter88)
       {
-        xfer += (*_iter70).write(oprot);
+        xfer += (*_iter88).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1627,14 +1627,14 @@ uint32_t GameFuncCall_GetRoundListTest_presult::read(::apache::thrift::protocol:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size71;
-            ::apache::thrift::protocol::TType _etype74;
-            xfer += iprot->readListBegin(_etype74, _size71);
-            (*(this->success)).resize(_size71);
-            uint32_t _i75;
-            for (_i75 = 0; _i75 < _size71; ++_i75)
+            uint32_t _size89;
+            ::apache::thrift::protocol::TType _etype92;
+            xfer += iprot->readListBegin(_etype92, _size89);
+            (*(this->success)).resize(_size89);
+            uint32_t _i93;
+            for (_i93 = 0; _i93 < _size89; ++_i93)
             {
-              xfer += (*(this->success))[_i75].read(iprot);
+              xfer += (*(this->success))[_i93].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2247,14 +2247,14 @@ uint32_t GameFuncCall_GetWaypointInfo_result::read(::apache::thrift::protocol::T
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size76;
-            ::apache::thrift::protocol::TType _etype79;
-            xfer += iprot->readListBegin(_etype79, _size76);
-            this->success.resize(_size76);
-            uint32_t _i80;
-            for (_i80 = 0; _i80 < _size76; ++_i80)
+            uint32_t _size94;
+            ::apache::thrift::protocol::TType _etype97;
+            xfer += iprot->readListBegin(_etype97, _size94);
+            this->success.resize(_size94);
+            uint32_t _i98;
+            for (_i98 = 0; _i98 < _size94; ++_i98)
             {
-              xfer += this->success[_i80].read(iprot);
+              xfer += this->success[_i98].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2285,10 +2285,10 @@ uint32_t GameFuncCall_GetWaypointInfo_result::write(::apache::thrift::protocol::
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<WaypointInfo> ::const_iterator _iter81;
-      for (_iter81 = this->success.begin(); _iter81 != this->success.end(); ++_iter81)
+      std::vector<WaypointInfo> ::const_iterator _iter99;
+      for (_iter99 = this->success.begin(); _iter99 != this->success.end(); ++_iter99)
       {
-        xfer += (*_iter81).write(oprot);
+        xfer += (*_iter99).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -2323,14 +2323,14 @@ uint32_t GameFuncCall_GetWaypointInfo_presult::read(::apache::thrift::protocol::
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size82;
-            ::apache::thrift::protocol::TType _etype85;
-            xfer += iprot->readListBegin(_etype85, _size82);
-            (*(this->success)).resize(_size82);
-            uint32_t _i86;
-            for (_i86 = 0; _i86 < _size82; ++_i86)
+            uint32_t _size100;
+            ::apache::thrift::protocol::TType _etype103;
+            xfer += iprot->readListBegin(_etype103, _size100);
+            (*(this->success)).resize(_size100);
+            uint32_t _i104;
+            for (_i104 = 0; _i104 < _size100; ++_i104)
             {
-              xfer += (*(this->success))[_i86].read(iprot);
+              xfer += (*(this->success))[_i104].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2604,14 +2604,14 @@ uint32_t GameFuncCall_GetContainerItemList_result::read(::apache::thrift::protoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size87;
-            ::apache::thrift::protocol::TType _etype90;
-            xfer += iprot->readListBegin(_etype90, _size87);
-            this->success.resize(_size87);
-            uint32_t _i91;
-            for (_i91 = 0; _i91 < _size87; ++_i91)
+            uint32_t _size105;
+            ::apache::thrift::protocol::TType _etype108;
+            xfer += iprot->readListBegin(_etype108, _size105);
+            this->success.resize(_size105);
+            uint32_t _i109;
+            for (_i109 = 0; _i109 < _size105; ++_i109)
             {
-              xfer += this->success[_i91].read(iprot);
+              xfer += this->success[_i109].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2642,10 +2642,10 @@ uint32_t GameFuncCall_GetContainerItemList_result::write(::apache::thrift::proto
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<ItemInfo> ::const_iterator _iter92;
-      for (_iter92 = this->success.begin(); _iter92 != this->success.end(); ++_iter92)
+      std::vector<ItemInfo> ::const_iterator _iter110;
+      for (_iter110 = this->success.begin(); _iter110 != this->success.end(); ++_iter110)
       {
-        xfer += (*_iter92).write(oprot);
+        xfer += (*_iter110).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -2680,14 +2680,14 @@ uint32_t GameFuncCall_GetContainerItemList_presult::read(::apache::thrift::proto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size93;
-            ::apache::thrift::protocol::TType _etype96;
-            xfer += iprot->readListBegin(_etype96, _size93);
-            (*(this->success)).resize(_size93);
-            uint32_t _i97;
-            for (_i97 = 0; _i97 < _size93; ++_i97)
+            uint32_t _size111;
+            ::apache::thrift::protocol::TType _etype114;
+            xfer += iprot->readListBegin(_etype114, _size111);
+            (*(this->success)).resize(_size111);
+            uint32_t _i115;
+            for (_i115 = 0; _i115 < _size111; ++_i115)
             {
-              xfer += (*(this->success))[_i97].read(iprot);
+              xfer += (*(this->success))[_i115].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2777,14 +2777,14 @@ uint32_t GameFuncCall_GetBagItemSpaceInfo_result::read(::apache::thrift::protoco
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size98;
-            ::apache::thrift::protocol::TType _etype101;
-            xfer += iprot->readListBegin(_etype101, _size98);
-            this->success.resize(_size98);
-            uint32_t _i102;
-            for (_i102 = 0; _i102 < _size98; ++_i102)
+            uint32_t _size116;
+            ::apache::thrift::protocol::TType _etype119;
+            xfer += iprot->readListBegin(_etype119, _size116);
+            this->success.resize(_size116);
+            uint32_t _i120;
+            for (_i120 = 0; _i120 < _size116; ++_i120)
             {
-              xfer += this->success[_i102].read(iprot);
+              xfer += this->success[_i120].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2815,10 +2815,10 @@ uint32_t GameFuncCall_GetBagItemSpaceInfo_result::write(::apache::thrift::protoc
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<ItemSpaceInfo> ::const_iterator _iter103;
-      for (_iter103 = this->success.begin(); _iter103 != this->success.end(); ++_iter103)
+      std::vector<ItemSpaceInfo> ::const_iterator _iter121;
+      for (_iter121 = this->success.begin(); _iter121 != this->success.end(); ++_iter121)
       {
-        xfer += (*_iter103).write(oprot);
+        xfer += (*_iter121).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -2853,14 +2853,14 @@ uint32_t GameFuncCall_GetBagItemSpaceInfo_presult::read(::apache::thrift::protoc
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size104;
-            ::apache::thrift::protocol::TType _etype107;
-            xfer += iprot->readListBegin(_etype107, _size104);
-            (*(this->success)).resize(_size104);
-            uint32_t _i108;
-            for (_i108 = 0; _i108 < _size104; ++_i108)
+            uint32_t _size122;
+            ::apache::thrift::protocol::TType _etype125;
+            xfer += iprot->readListBegin(_etype125, _size122);
+            (*(this->success)).resize(_size122);
+            uint32_t _i126;
+            for (_i126 = 0; _i126 < _size122; ++_i126)
             {
-              xfer += (*(this->success))[_i108].read(iprot);
+              xfer += (*(this->success))[_i126].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -3349,14 +3349,14 @@ uint32_t GameFuncCall_SetLootTypeList_args::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->LootList.clear();
-            uint32_t _size109;
-            ::apache::thrift::protocol::TType _etype112;
-            xfer += iprot->readListBegin(_etype112, _size109);
-            this->LootList.resize(_size109);
-            uint32_t _i113;
-            for (_i113 = 0; _i113 < _size109; ++_i113)
+            uint32_t _size127;
+            ::apache::thrift::protocol::TType _etype130;
+            xfer += iprot->readListBegin(_etype130, _size127);
+            this->LootList.resize(_size127);
+            uint32_t _i131;
+            for (_i131 = 0; _i131 < _size127; ++_i131)
             {
-              xfer += this->LootList[_i113].read(iprot);
+              xfer += this->LootList[_i131].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -3408,10 +3408,10 @@ uint32_t GameFuncCall_SetLootTypeList_args::write(::apache::thrift::protocol::TP
   xfer += oprot->writeFieldBegin("LootList", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->LootList.size()));
-    std::vector<LootType> ::const_iterator _iter114;
-    for (_iter114 = this->LootList.begin(); _iter114 != this->LootList.end(); ++_iter114)
+    std::vector<LootType> ::const_iterator _iter132;
+    for (_iter132 = this->LootList.begin(); _iter132 != this->LootList.end(); ++_iter132)
     {
-      xfer += (*_iter114).write(oprot);
+      xfer += (*_iter132).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -3441,10 +3441,10 @@ uint32_t GameFuncCall_SetLootTypeList_pargs::write(::apache::thrift::protocol::T
   xfer += oprot->writeFieldBegin("LootList", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->LootList)).size()));
-    std::vector<LootType> ::const_iterator _iter115;
-    for (_iter115 = (*(this->LootList)).begin(); _iter115 != (*(this->LootList)).end(); ++_iter115)
+    std::vector<LootType> ::const_iterator _iter133;
+    for (_iter133 = (*(this->LootList)).begin(); _iter133 != (*(this->LootList)).end(); ++_iter133)
     {
-      xfer += (*_iter115).write(oprot);
+      xfer += (*_iter133).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -3728,14 +3728,14 @@ uint32_t GameFuncCall_GetTrophyList_args::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->TrophyIDList.clear();
-            uint32_t _size116;
-            ::apache::thrift::protocol::TType _etype119;
-            xfer += iprot->readListBegin(_etype119, _size116);
-            this->TrophyIDList.resize(_size116);
-            uint32_t _i120;
-            for (_i120 = 0; _i120 < _size116; ++_i120)
+            uint32_t _size134;
+            ::apache::thrift::protocol::TType _etype137;
+            xfer += iprot->readListBegin(_etype137, _size134);
+            this->TrophyIDList.resize(_size134);
+            uint32_t _i138;
+            for (_i138 = 0; _i138 < _size134; ++_i138)
             {
-              xfer += this->TrophyIDList[_i120].read(iprot);
+              xfer += this->TrophyIDList[_i138].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -3763,10 +3763,10 @@ uint32_t GameFuncCall_GetTrophyList_args::write(::apache::thrift::protocol::TPro
   xfer += oprot->writeFieldBegin("TrophyIDList", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->TrophyIDList.size()));
-    std::vector<TrophyBaseInfo> ::const_iterator _iter121;
-    for (_iter121 = this->TrophyIDList.begin(); _iter121 != this->TrophyIDList.end(); ++_iter121)
+    std::vector<TrophyBaseInfo> ::const_iterator _iter139;
+    for (_iter139 = this->TrophyIDList.begin(); _iter139 != this->TrophyIDList.end(); ++_iter139)
     {
-      xfer += (*_iter121).write(oprot);
+      xfer += (*_iter139).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -3784,10 +3784,10 @@ uint32_t GameFuncCall_GetTrophyList_pargs::write(::apache::thrift::protocol::TPr
   xfer += oprot->writeFieldBegin("TrophyIDList", ::apache::thrift::protocol::T_LIST, 1);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>((*(this->TrophyIDList)).size()));
-    std::vector<TrophyBaseInfo> ::const_iterator _iter122;
-    for (_iter122 = (*(this->TrophyIDList)).begin(); _iter122 != (*(this->TrophyIDList)).end(); ++_iter122)
+    std::vector<TrophyBaseInfo> ::const_iterator _iter140;
+    for (_iter140 = (*(this->TrophyIDList)).begin(); _iter140 != (*(this->TrophyIDList)).end(); ++_iter140)
     {
-      xfer += (*_iter122).write(oprot);
+      xfer += (*_iter140).write(oprot);
     }
     xfer += oprot->writeListEnd();
   }
@@ -3822,14 +3822,14 @@ uint32_t GameFuncCall_GetTrophyList_result::read(::apache::thrift::protocol::TPr
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size123;
-            ::apache::thrift::protocol::TType _etype126;
-            xfer += iprot->readListBegin(_etype126, _size123);
-            this->success.resize(_size123);
-            uint32_t _i127;
-            for (_i127 = 0; _i127 < _size123; ++_i127)
+            uint32_t _size141;
+            ::apache::thrift::protocol::TType _etype144;
+            xfer += iprot->readListBegin(_etype144, _size141);
+            this->success.resize(_size141);
+            uint32_t _i145;
+            for (_i145 = 0; _i145 < _size141; ++_i145)
             {
-              xfer += this->success[_i127].read(iprot);
+              xfer += this->success[_i145].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -3860,10 +3860,10 @@ uint32_t GameFuncCall_GetTrophyList_result::write(::apache::thrift::protocol::TP
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TrophyInfo> ::const_iterator _iter128;
-      for (_iter128 = this->success.begin(); _iter128 != this->success.end(); ++_iter128)
+      std::vector<TrophyInfo> ::const_iterator _iter146;
+      for (_iter146 = this->success.begin(); _iter146 != this->success.end(); ++_iter146)
       {
-        xfer += (*_iter128).write(oprot);
+        xfer += (*_iter146).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -3898,14 +3898,14 @@ uint32_t GameFuncCall_GetTrophyList_presult::read(::apache::thrift::protocol::TP
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size129;
-            ::apache::thrift::protocol::TType _etype132;
-            xfer += iprot->readListBegin(_etype132, _size129);
-            (*(this->success)).resize(_size129);
-            uint32_t _i133;
-            for (_i133 = 0; _i133 < _size129; ++_i133)
+            uint32_t _size147;
+            ::apache::thrift::protocol::TType _etype150;
+            xfer += iprot->readListBegin(_etype150, _size147);
+            (*(this->success)).resize(_size147);
+            uint32_t _i151;
+            for (_i151 = 0; _i151 < _size147; ++_i151)
             {
-              xfer += (*(this->success))[_i133].read(iprot);
+              xfer += (*(this->success))[_i151].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -8501,6 +8501,341 @@ uint32_t GameFuncCall_IsBuffExists_presult::read(::apache::thrift::protocol::TPr
   return xfer;
 }
 
+uint32_t GameFuncCall_GetItemDescription_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->ItemObjPtr);
+          this->__isset.ItemObjPtr = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetItemDescription_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("GameFuncCall_GetItemDescription_args");
+
+  xfer += oprot->writeFieldBegin("ItemObjPtr", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->ItemObjPtr);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetItemDescription_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("GameFuncCall_GetItemDescription_pargs");
+
+  xfer += oprot->writeFieldBegin("ItemObjPtr", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32((*(this->ItemObjPtr)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetItemDescription_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetItemDescription_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("GameFuncCall_GetItemDescription_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetItemDescription_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetBagItemFullInfo_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    xfer += iprot->skip(ftype);
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetBagItemFullInfo_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("GameFuncCall_GetBagItemFullInfo_args");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetBagItemFullInfo_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("GameFuncCall_GetBagItemFullInfo_pargs");
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetBagItemFullInfo_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->success.clear();
+            uint32_t _size152;
+            ::apache::thrift::protocol::TType _etype155;
+            xfer += iprot->readListBegin(_etype155, _size152);
+            this->success.resize(_size152);
+            uint32_t _i156;
+            for (_i156 = 0; _i156 < _size152; ++_i156)
+            {
+              xfer += this->success[_i156].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetBagItemFullInfo_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+
+  uint32_t xfer = 0;
+
+  xfer += oprot->writeStructBegin("GameFuncCall_GetBagItemFullInfo_result");
+
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
+    {
+      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
+      std::vector<ItemFullInfo> ::const_iterator _iter157;
+      for (_iter157 = this->success.begin(); _iter157 != this->success.end(); ++_iter157)
+      {
+        xfer += (*_iter157).write(oprot);
+      }
+      xfer += oprot->writeListEnd();
+    }
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+uint32_t GameFuncCall_GetBagItemFullInfo_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            (*(this->success)).clear();
+            uint32_t _size158;
+            ::apache::thrift::protocol::TType _etype161;
+            xfer += iprot->readListBegin(_etype161, _size158);
+            (*(this->success)).resize(_size158);
+            uint32_t _i162;
+            for (_i162 = 0; _i162 < _size158; ++_i162)
+            {
+              xfer += (*(this->success))[_i162].read(iprot);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
 int32_t GameFuncCallClient::SetUID(const std::string& strUID, const std::string& strPWD)
 {
   send_SetUID(strUID, strPWD);
@@ -11622,6 +11957,121 @@ bool GameFuncCallClient::recv_IsBuffExists()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "IsBuffExists failed: unknown result");
 }
 
+int32_t GameFuncCallClient::GetItemDescription(const int32_t ItemObjPtr)
+{
+  send_GetItemDescription(ItemObjPtr);
+  return recv_GetItemDescription();
+}
+
+void GameFuncCallClient::send_GetItemDescription(const int32_t ItemObjPtr)
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("GetItemDescription", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  GameFuncCall_GetItemDescription_pargs args;
+  args.ItemObjPtr = &ItemObjPtr;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+int32_t GameFuncCallClient::recv_GetItemDescription()
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("GetItemDescription") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  int32_t _return;
+  GameFuncCall_GetItemDescription_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "GetItemDescription failed: unknown result");
+}
+
+void GameFuncCallClient::GetBagItemFullInfo(std::vector<ItemFullInfo> & _return)
+{
+  send_GetBagItemFullInfo();
+  recv_GetBagItemFullInfo(_return);
+}
+
+void GameFuncCallClient::send_GetBagItemFullInfo()
+{
+  int32_t cseqid = 0;
+  oprot_->writeMessageBegin("GetBagItemFullInfo", ::apache::thrift::protocol::T_CALL, cseqid);
+
+  GameFuncCall_GetBagItemFullInfo_pargs args;
+  args.write(oprot_);
+
+  oprot_->writeMessageEnd();
+  oprot_->getTransport()->writeEnd();
+  oprot_->getTransport()->flush();
+}
+
+void GameFuncCallClient::recv_GetBagItemFullInfo(std::vector<ItemFullInfo> & _return)
+{
+
+  int32_t rseqid = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TMessageType mtype;
+
+  iprot_->readMessageBegin(fname, mtype, rseqid);
+  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
+    ::apache::thrift::TApplicationException x;
+    x.read(iprot_);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+    throw x;
+  }
+  if (mtype != ::apache::thrift::protocol::T_REPLY) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  if (fname.compare("GetBagItemFullInfo") != 0) {
+    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
+    iprot_->readMessageEnd();
+    iprot_->getTransport()->readEnd();
+  }
+  GameFuncCall_GetBagItemFullInfo_presult result;
+  result.success = &_return;
+  result.read(iprot_);
+  iprot_->readMessageEnd();
+  iprot_->getTransport()->readEnd();
+
+  if (result.__isset.success) {
+    // _return pointer has now been filled
+    return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "GetBagItemFullInfo failed: unknown result");
+}
+
 bool GameFuncCallProcessor::dispatchCall(::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, const std::string& fname, int32_t seqid, void* callContext) {
   ProcessMap::iterator pfn;
   pfn = processMap_.find(fname);
@@ -14596,6 +15046,114 @@ void GameFuncCallProcessor::process_IsBuffExists(int32_t seqid, ::apache::thrift
 
   if (this->eventHandler_.get() != NULL) {
     this->eventHandler_->postWrite(ctx, "GameFuncCall.IsBuffExists", bytes);
+  }
+}
+
+void GameFuncCallProcessor::process_GetItemDescription(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("GameFuncCall.GetItemDescription", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "GameFuncCall.GetItemDescription");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "GameFuncCall.GetItemDescription");
+  }
+
+  GameFuncCall_GetItemDescription_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "GameFuncCall.GetItemDescription", bytes);
+  }
+
+  GameFuncCall_GetItemDescription_result result;
+  try {
+    result.success = iface_->GetItemDescription(args.ItemObjPtr);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "GameFuncCall.GetItemDescription");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("GetItemDescription", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "GameFuncCall.GetItemDescription");
+  }
+
+  oprot->writeMessageBegin("GetItemDescription", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "GameFuncCall.GetItemDescription", bytes);
+  }
+}
+
+void GameFuncCallProcessor::process_GetBagItemFullInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+{
+  void* ctx = NULL;
+  if (this->eventHandler_.get() != NULL) {
+    ctx = this->eventHandler_->getContext("GameFuncCall.GetBagItemFullInfo", callContext);
+  }
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "GameFuncCall.GetBagItemFullInfo");
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preRead(ctx, "GameFuncCall.GetBagItemFullInfo");
+  }
+
+  GameFuncCall_GetBagItemFullInfo_args args;
+  args.read(iprot);
+  iprot->readMessageEnd();
+  uint32_t bytes = iprot->getTransport()->readEnd();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postRead(ctx, "GameFuncCall.GetBagItemFullInfo", bytes);
+  }
+
+  GameFuncCall_GetBagItemFullInfo_result result;
+  try {
+    iface_->GetBagItemFullInfo(result.success);
+    result.__isset.success = true;
+  } catch (const std::exception& e) {
+    if (this->eventHandler_.get() != NULL) {
+      this->eventHandler_->handlerError(ctx, "GameFuncCall.GetBagItemFullInfo");
+    }
+
+    ::apache::thrift::TApplicationException x(e.what());
+    oprot->writeMessageBegin("GetBagItemFullInfo", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    x.write(oprot);
+    oprot->writeMessageEnd();
+    oprot->getTransport()->writeEnd();
+    oprot->getTransport()->flush();
+    return;
+  }
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->preWrite(ctx, "GameFuncCall.GetBagItemFullInfo");
+  }
+
+  oprot->writeMessageBegin("GetBagItemFullInfo", ::apache::thrift::protocol::T_REPLY, seqid);
+  result.write(oprot);
+  oprot->writeMessageEnd();
+  bytes = oprot->getTransport()->writeEnd();
+  oprot->getTransport()->flush();
+
+  if (this->eventHandler_.get() != NULL) {
+    this->eventHandler_->postWrite(ctx, "GameFuncCall.GetBagItemFullInfo", bytes);
   }
 }
 

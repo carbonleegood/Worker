@@ -38,6 +38,7 @@ enum FuncCode
 	F_UpSkill,//升级技能石
 	F_ItemOnMouse,
 	F_BuffExist,
+	F_GetItemDescrib,
 };
 //extern ::CRITICAL_SECTION cs_core;
 //extern ::CONDITION_VARIABLE cv_core;
@@ -251,3 +252,6 @@ extern FP_IsBuffExists IsBuffExists;
 
 typedef  ULONG(__stdcall*FP_IsItemOnMouse)();
 extern FP_IsItemOnMouse IsItemOnMouse;
+
+typedef  ULONG(__stdcall*FP_GetDescription)(ULONG ItemObjPtr);
+extern FP_GetDescription GetDescription;

@@ -70,6 +70,8 @@ class GameFuncCallIf {
   virtual void UpSkill() = 0;
   virtual bool IsItemOnMouse() = 0;
   virtual bool IsBuffExists(const int32_t skill) = 0;
+  virtual int32_t GetItemDescription(const int32_t ItemObjPtr) = 0;
+  virtual void GetBagItemFullInfo(std::vector<ItemFullInfo> & _return) = 0;
 };
 
 class GameFuncCallIfFactory {
@@ -295,6 +297,13 @@ class GameFuncCallNull : virtual public GameFuncCallIf {
   bool IsBuffExists(const int32_t /* skill */) {
     bool _return = false;
     return _return;
+  }
+  int32_t GetItemDescription(const int32_t /* ItemObjPtr */) {
+    int32_t _return = 0;
+    return _return;
+  }
+  void GetBagItemFullInfo(std::vector<ItemFullInfo> & /* _return */) {
+    return;
   }
 };
 
@@ -5767,6 +5776,208 @@ class GameFuncCall_IsBuffExists_presult {
 
 };
 
+typedef struct _GameFuncCall_GetItemDescription_args__isset {
+  _GameFuncCall_GetItemDescription_args__isset() : ItemObjPtr(false) {}
+  bool ItemObjPtr;
+} _GameFuncCall_GetItemDescription_args__isset;
+
+class GameFuncCall_GetItemDescription_args {
+ public:
+
+  GameFuncCall_GetItemDescription_args() : ItemObjPtr(0) {
+  }
+
+  virtual ~GameFuncCall_GetItemDescription_args() throw() {}
+
+  int32_t ItemObjPtr;
+
+  _GameFuncCall_GetItemDescription_args__isset __isset;
+
+  void __set_ItemObjPtr(const int32_t val) {
+    ItemObjPtr = val;
+  }
+
+  bool operator == (const GameFuncCall_GetItemDescription_args & rhs) const
+  {
+    if (!(ItemObjPtr == rhs.ItemObjPtr))
+      return false;
+    return true;
+  }
+  bool operator != (const GameFuncCall_GetItemDescription_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_GetItemDescription_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_GetItemDescription_pargs {
+ public:
+
+
+  virtual ~GameFuncCall_GetItemDescription_pargs() throw() {}
+
+  const int32_t* ItemObjPtr;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _GameFuncCall_GetItemDescription_result__isset {
+  _GameFuncCall_GetItemDescription_result__isset() : success(false) {}
+  bool success;
+} _GameFuncCall_GetItemDescription_result__isset;
+
+class GameFuncCall_GetItemDescription_result {
+ public:
+
+  GameFuncCall_GetItemDescription_result() : success(0) {
+  }
+
+  virtual ~GameFuncCall_GetItemDescription_result() throw() {}
+
+  int32_t success;
+
+  _GameFuncCall_GetItemDescription_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const GameFuncCall_GetItemDescription_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const GameFuncCall_GetItemDescription_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_GetItemDescription_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _GameFuncCall_GetItemDescription_presult__isset {
+  _GameFuncCall_GetItemDescription_presult__isset() : success(false) {}
+  bool success;
+} _GameFuncCall_GetItemDescription_presult__isset;
+
+class GameFuncCall_GetItemDescription_presult {
+ public:
+
+
+  virtual ~GameFuncCall_GetItemDescription_presult() throw() {}
+
+  int32_t* success;
+
+  _GameFuncCall_GetItemDescription_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class GameFuncCall_GetBagItemFullInfo_args {
+ public:
+
+  GameFuncCall_GetBagItemFullInfo_args() {
+  }
+
+  virtual ~GameFuncCall_GetBagItemFullInfo_args() throw() {}
+
+
+  bool operator == (const GameFuncCall_GetBagItemFullInfo_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const GameFuncCall_GetBagItemFullInfo_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_GetBagItemFullInfo_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_GetBagItemFullInfo_pargs {
+ public:
+
+
+  virtual ~GameFuncCall_GetBagItemFullInfo_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _GameFuncCall_GetBagItemFullInfo_result__isset {
+  _GameFuncCall_GetBagItemFullInfo_result__isset() : success(false) {}
+  bool success;
+} _GameFuncCall_GetBagItemFullInfo_result__isset;
+
+class GameFuncCall_GetBagItemFullInfo_result {
+ public:
+
+  GameFuncCall_GetBagItemFullInfo_result() {
+  }
+
+  virtual ~GameFuncCall_GetBagItemFullInfo_result() throw() {}
+
+  std::vector<ItemFullInfo>  success;
+
+  _GameFuncCall_GetBagItemFullInfo_result__isset __isset;
+
+  void __set_success(const std::vector<ItemFullInfo> & val) {
+    success = val;
+  }
+
+  bool operator == (const GameFuncCall_GetBagItemFullInfo_result & rhs) const
+  {
+    if (!(success == rhs.success))
+      return false;
+    return true;
+  }
+  bool operator != (const GameFuncCall_GetBagItemFullInfo_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_GetBagItemFullInfo_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+typedef struct _GameFuncCall_GetBagItemFullInfo_presult__isset {
+  _GameFuncCall_GetBagItemFullInfo_presult__isset() : success(false) {}
+  bool success;
+} _GameFuncCall_GetBagItemFullInfo_presult__isset;
+
+class GameFuncCall_GetBagItemFullInfo_presult {
+ public:
+
+
+  virtual ~GameFuncCall_GetBagItemFullInfo_presult() throw() {}
+
+  std::vector<ItemFullInfo> * success;
+
+  _GameFuncCall_GetBagItemFullInfo_presult__isset __isset;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class GameFuncCallClient : virtual public GameFuncCallIf {
  public:
   GameFuncCallClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -5952,6 +6163,12 @@ class GameFuncCallClient : virtual public GameFuncCallIf {
   bool IsBuffExists(const int32_t skill);
   void send_IsBuffExists(const int32_t skill);
   bool recv_IsBuffExists();
+  int32_t GetItemDescription(const int32_t ItemObjPtr);
+  void send_GetItemDescription(const int32_t ItemObjPtr);
+  int32_t recv_GetItemDescription();
+  void GetBagItemFullInfo(std::vector<ItemFullInfo> & _return);
+  void send_GetBagItemFullInfo();
+  void recv_GetBagItemFullInfo(std::vector<ItemFullInfo> & _return);
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -6022,6 +6239,8 @@ class GameFuncCallProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_UpSkill(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_IsItemOnMouse(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_IsBuffExists(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetItemDescription(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_GetBagItemFullInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   GameFuncCallProcessor(boost::shared_ptr<GameFuncCallIf> iface) :
     iface_(iface) {
@@ -6080,6 +6299,8 @@ class GameFuncCallProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["UpSkill"] = &GameFuncCallProcessor::process_UpSkill;
     processMap_["IsItemOnMouse"] = &GameFuncCallProcessor::process_IsItemOnMouse;
     processMap_["IsBuffExists"] = &GameFuncCallProcessor::process_IsBuffExists;
+    processMap_["GetItemDescription"] = &GameFuncCallProcessor::process_GetItemDescription;
+    processMap_["GetBagItemFullInfo"] = &GameFuncCallProcessor::process_GetBagItemFullInfo;
   }
 
   virtual ~GameFuncCallProcessor() {}
@@ -6612,6 +6833,25 @@ class GameFuncCallMultiface : virtual public GameFuncCallIf {
       ifaces_[i]->IsBuffExists(skill);
     }
     return ifaces_[i]->IsBuffExists(skill);
+  }
+
+  int32_t GetItemDescription(const int32_t ItemObjPtr) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->GetItemDescription(ItemObjPtr);
+    }
+    return ifaces_[i]->GetItemDescription(ItemObjPtr);
+  }
+
+  void GetBagItemFullInfo(std::vector<ItemFullInfo> & _return) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->GetBagItemFullInfo(_return);
+    }
+    ifaces_[i]->GetBagItemFullInfo(_return);
+    return;
   }
 
 };
