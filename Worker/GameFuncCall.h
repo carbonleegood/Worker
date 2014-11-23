@@ -37,7 +37,7 @@ class GameFuncCallIf {
   virtual void GetCurrentMapInfo(WaypointInfo& _return) = 0;
   virtual int32_t GetCurrentMapID() = 0;
   virtual void GetTrophyInfo(TrophyInfo& _return, const int32_t TrophyObjPtr) = 0;
-  virtual int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor) = 0;
+  virtual int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter) = 0;
   virtual int32_t ClearTrophyFilter() = 0;
   virtual void GetTrophyList(std::vector<TrophyInfo> & _return, const std::vector<TrophyBaseInfo> & TrophyIDList) = 0;
   virtual int32_t ReadLoginState() = 0;
@@ -170,7 +170,7 @@ class GameFuncCallNull : virtual public GameFuncCallIf {
   void GetTrophyInfo(TrophyInfo& /* _return */, const int32_t /* TrophyObjPtr */) {
     return;
   }
-  int32_t SetLootTypeList(const std::vector<LootType> & /* LootList */, const int16_t /* SocketFilter */, const int16_t /* SocketConnectFilter */, const bool /* LootThreeSocketColor */) {
+  int32_t SetLootTypeList(const std::vector<LootType> & /* LootList */, const int16_t /* SocketFilter */, const int16_t /* SocketConnectFilter */, const bool /* LootThreeSocketColor */, const int16_t /* SkillQualityFilter */) {
     int32_t _return = 0;
     return _return;
   }
@@ -2403,17 +2403,18 @@ class GameFuncCall_GetTrophyInfo_presult {
 };
 
 typedef struct _GameFuncCall_SetLootTypeList_args__isset {
-  _GameFuncCall_SetLootTypeList_args__isset() : LootList(false), SocketFilter(false), SocketConnectFilter(false), LootThreeSocketColor(false) {}
+  _GameFuncCall_SetLootTypeList_args__isset() : LootList(false), SocketFilter(false), SocketConnectFilter(false), LootThreeSocketColor(false), SkillQualityFilter(false) {}
   bool LootList;
   bool SocketFilter;
   bool SocketConnectFilter;
   bool LootThreeSocketColor;
+  bool SkillQualityFilter;
 } _GameFuncCall_SetLootTypeList_args__isset;
 
 class GameFuncCall_SetLootTypeList_args {
  public:
 
-  GameFuncCall_SetLootTypeList_args() : SocketFilter(0), SocketConnectFilter(0), LootThreeSocketColor(0) {
+  GameFuncCall_SetLootTypeList_args() : SocketFilter(0), SocketConnectFilter(0), LootThreeSocketColor(0), SkillQualityFilter(0) {
   }
 
   virtual ~GameFuncCall_SetLootTypeList_args() throw() {}
@@ -2422,6 +2423,7 @@ class GameFuncCall_SetLootTypeList_args {
   int16_t SocketFilter;
   int16_t SocketConnectFilter;
   bool LootThreeSocketColor;
+  int16_t SkillQualityFilter;
 
   _GameFuncCall_SetLootTypeList_args__isset __isset;
 
@@ -2441,6 +2443,10 @@ class GameFuncCall_SetLootTypeList_args {
     LootThreeSocketColor = val;
   }
 
+  void __set_SkillQualityFilter(const int16_t val) {
+    SkillQualityFilter = val;
+  }
+
   bool operator == (const GameFuncCall_SetLootTypeList_args & rhs) const
   {
     if (!(LootList == rhs.LootList))
@@ -2450,6 +2456,8 @@ class GameFuncCall_SetLootTypeList_args {
     if (!(SocketConnectFilter == rhs.SocketConnectFilter))
       return false;
     if (!(LootThreeSocketColor == rhs.LootThreeSocketColor))
+      return false;
+    if (!(SkillQualityFilter == rhs.SkillQualityFilter))
       return false;
     return true;
   }
@@ -2475,6 +2483,7 @@ class GameFuncCall_SetLootTypeList_pargs {
   const int16_t* SocketFilter;
   const int16_t* SocketConnectFilter;
   const bool* LootThreeSocketColor;
+  const int16_t* SkillQualityFilter;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -6064,8 +6073,8 @@ class GameFuncCallClient : virtual public GameFuncCallIf {
   void GetTrophyInfo(TrophyInfo& _return, const int32_t TrophyObjPtr);
   void send_GetTrophyInfo(const int32_t TrophyObjPtr);
   void recv_GetTrophyInfo(TrophyInfo& _return);
-  int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor);
-  void send_SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor);
+  int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter);
+  void send_SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter);
   int32_t recv_SetLootTypeList();
   int32_t ClearTrophyFilter();
   void send_ClearTrophyFilter();
@@ -6537,13 +6546,13 @@ class GameFuncCallMultiface : virtual public GameFuncCallIf {
     return;
   }
 
-  int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor) {
+  int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->SetLootTypeList(LootList, SocketFilter, SocketConnectFilter, LootThreeSocketColor);
+      ifaces_[i]->SetLootTypeList(LootList, SocketFilter, SocketConnectFilter, LootThreeSocketColor, SkillQualityFilter);
     }
-    return ifaces_[i]->SetLootTypeList(LootList, SocketFilter, SocketConnectFilter, LootThreeSocketColor);
+    return ifaces_[i]->SetLootTypeList(LootList, SocketFilter, SocketConnectFilter, LootThreeSocketColor, SkillQualityFilter);
   }
 
   int32_t ClearTrophyFilter() {

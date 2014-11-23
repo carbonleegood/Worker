@@ -3389,6 +3389,14 @@ uint32_t GameFuncCall_SetLootTypeList_args::read(::apache::thrift::protocol::TPr
           xfer += iprot->skip(ftype);
         }
         break;
+      case 5:
+        if (ftype == ::apache::thrift::protocol::T_I16) {
+          xfer += iprot->readI16(this->SkillQualityFilter);
+          this->__isset.SkillQualityFilter = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -3429,6 +3437,10 @@ uint32_t GameFuncCall_SetLootTypeList_args::write(::apache::thrift::protocol::TP
   xfer += oprot->writeBool(this->LootThreeSocketColor);
   xfer += oprot->writeFieldEnd();
 
+  xfer += oprot->writeFieldBegin("SkillQualityFilter", ::apache::thrift::protocol::T_I16, 5);
+  xfer += oprot->writeI16(this->SkillQualityFilter);
+  xfer += oprot->writeFieldEnd();
+
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -3460,6 +3472,10 @@ uint32_t GameFuncCall_SetLootTypeList_pargs::write(::apache::thrift::protocol::T
 
   xfer += oprot->writeFieldBegin("LootThreeSocketColor", ::apache::thrift::protocol::T_BOOL, 4);
   xfer += oprot->writeBool((*(this->LootThreeSocketColor)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("SkillQualityFilter", ::apache::thrift::protocol::T_I16, 5);
+  xfer += oprot->writeI16((*(this->SkillQualityFilter)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -10063,13 +10079,13 @@ void GameFuncCallClient::recv_GetTrophyInfo(TrophyInfo& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "GetTrophyInfo failed: unknown result");
 }
 
-int32_t GameFuncCallClient::SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor)
+int32_t GameFuncCallClient::SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter)
 {
-  send_SetLootTypeList(LootList, SocketFilter, SocketConnectFilter, LootThreeSocketColor);
+  send_SetLootTypeList(LootList, SocketFilter, SocketConnectFilter, LootThreeSocketColor, SkillQualityFilter);
   return recv_SetLootTypeList();
 }
 
-void GameFuncCallClient::send_SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor)
+void GameFuncCallClient::send_SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("SetLootTypeList", ::apache::thrift::protocol::T_CALL, cseqid);
@@ -10079,6 +10095,7 @@ void GameFuncCallClient::send_SetLootTypeList(const std::vector<LootType> & Loot
   args.SocketFilter = &SocketFilter;
   args.SocketConnectFilter = &SocketConnectFilter;
   args.LootThreeSocketColor = &LootThreeSocketColor;
+  args.SkillQualityFilter = &SkillQualityFilter;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -13293,7 +13310,7 @@ void GameFuncCallProcessor::process_SetLootTypeList(int32_t seqid, ::apache::thr
 
   GameFuncCall_SetLootTypeList_result result;
   try {
-    result.success = iface_->SetLootTypeList(args.LootList, args.SocketFilter, args.SocketConnectFilter, args.LootThreeSocketColor);
+    result.success = iface_->SetLootTypeList(args.LootList, args.SocketFilter, args.SocketConnectFilter, args.LootThreeSocketColor, args.SkillQualityFilter);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {

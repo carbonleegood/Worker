@@ -763,7 +763,7 @@ public:
 				if (pBag->Items[i].SocketsContact[d] > 2)//检测三色孔
 				{
 					int SocketColor = 0;
-					for (int j = begin; j <=( pBag->Items[i].SocketsContact[d]+begin); ++j)
+					for (int j = begin; j <( pBag->Items[i].SocketsContact[d]+begin); ++j)
 					{
 						switch (pBag->Items[i].Sockets[j])
 						{
@@ -962,15 +962,18 @@ public:
 		}
 #endif
 	}
-	std::map<int, int> LootFilter;
+	std::map<int, int> LootFilter;//拾取过滤,符合规则的才拾取
+	std::set<wstring> MustLootList;//按名称必须拾取的物品
+	int nSkillQualityFilter;//技能石过滤品质
 	int SocketCountFilter;
 	int SocketConnectCountFilter;
 	bool bLootThreeSocketColor;
-	int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor)
+	int32_t SetLootTypeList(const std::vector<LootType> & LootList, const int16_t SocketFilter, const int16_t SocketConnectFilter, const bool LootThreeSocketColor, const int16_t SkillQualityFilter)
 	{
 		SocketCountFilter = SocketFilter;
 		SocketConnectCountFilter = SocketConnectFilter;
 		bLootThreeSocketColor = LootThreeSocketColor;
+		nSkillQualityFilter=SkillQualityFilter;
 		// Your implementation goes here
 		//printf("SetLootTypeList\n");
 		LootFilter.clear();
@@ -1055,63 +1058,71 @@ public:
 			{
 				nType = UnknowType;
 			}
-			/*else
+			bool bLoot = false;
+
+			//看看是否是一定拾取的
+			wstring strItemName=(wchar_t*)_TrophyInfo.Name;
+			auto iterLootName=MustLootList.find(strItemName);
+			if (iterLootName != MustLootList.end())
 			{
-				if (_TrophyInfo.Color < 2)
-					continue;
-				nType = byTrophy_Armour;
-			}*/
+				bLoot = true;
+			}
+
+
 			TrophyInfo temp;
 			temp.SocketConnect = 0;
 			temp.Socket = 0;
-			int begin = 0;
-			for (int i = 0; i<6; ++i)
-			{
-				if (_TrophyInfo.SocketsContact[i] == 0)
-					break;
-				if (_TrophyInfo.SocketsContact[i]>temp.SocketConnect)
-				{
-					temp.SocketConnect = _TrophyInfo.SocketsContact[i];
-				}
-				if (_TrophyInfo.SocketsContact[i] > 2)//检测三色孔
-				{
-					int SocketColor = 0;
-					for (int j = begin; j <= (_TrophyInfo.SocketsContact[i]+begin); ++j)
-					{
-						switch (_TrophyInfo.Sockets[j])
-						{
-						case 1:
-							SocketColor |= 1;
-							break;
-						case 2:
-							SocketColor |= 2;
-							break;
-						case 3:
-							SocketColor |= 4;
-							break;
-						}
-					}
-					if (SocketColor == 7)
-						temp.ThreeColorSocket = true;
-				}
-				begin += _TrophyInfo.SocketsContact[i];
-			}
-			for (int i = 0; i < 6; ++i)
-			{
-				switch (_TrophyInfo.Sockets[i])
-				{
-				case 1:
-				case 2:
-				case 3:
-					++(temp.Socket);
-					break;
-				}
-			}
+			
 			//////////////////////////////////////////////////////////////
 
-			bool bLoot = false;
+			
 			if (nType == byTrophy_Weapon || nType == byTrophy_Armour)
 			{
+				///////////////////////////////////////////////原检测三色装部分,现在只对武器和护甲检测
+				int begin = 0;
+				for (int i = 0; i<6; ++i)
+				{
+					if (_TrophyInfo.SocketsContact[i] == 0)
+						break;
+					if (_TrophyInfo.SocketsContact[i]>temp.SocketConnect)
+					{
+						temp.SocketConnect = _TrophyInfo.SocketsContact[i];
+					}
+					if (_TrophyInfo.SocketsContact[i] > 2)//检测三色孔
+					{
+						int SocketColor = 0;
+						for (int j = begin; j < (_TrophyInfo.SocketsContact[i] + begin); ++j)
+						{
+							switch (_TrophyInfo.Sockets[j])
+							{
+							case 1:
+								SocketColor |= 1;
+								break;
+							case 2:
+								SocketColor |= 2;
+								break;
+							case 3:
+								SocketColor |= 4;
+								break;
+							}
+						}
+						if (SocketColor == 7)
+							temp.ThreeColorSocket = true;
+					}
+					begin += _TrophyInfo.SocketsContact[i];
+				}
+				for (int i = 0; i < 6; ++i)
+				{
+					switch (_TrophyInfo.Sockets[i])
+					{
+					case 1:
+					case 2:
+					case 3:
+						++(temp.Socket);
+						break;
+					}
+				}
+				///////////////////////////////////////////////////////////////////////////////
 				if (SocketCountFilter > 0)
 				{
 					if (temp.Socket >= SocketCountFilter)
@@ -1135,17 +1146,28 @@ public:
 			if (bLoot == false)
 			{
 				auto iter = LootFilter.find(nType);
+				Point pos(item.X, item.Y);
 				if (iter == LootFilter.end())//不在拾取类型列表里,则不拾取
 				{
-					Point pos(item.X, item.Y);
 					auto iter = NeedLootPos.find(pos);
 					if (iter == NeedLootPos.end())
 						TrophyFilter.insert(pos);
 					continue;
 				}
+				//如果是技能石,看下品质,不够的也不要
+				if (nType == byTrophy_SkillStone)
+				{
+					if (_TrophyInfo.Quality<nSkillQualityFilter)
+					{
+						auto iter = NeedLootPos.find(pos);
+						if (iter == NeedLootPos.end())
+							TrophyFilter.insert(pos);
+						continue;
+					}
+				}
 				if (iter->second > _TrophyInfo.Color)//颜色值大于,也不拾取
 				{
-					Point pos(item.X, item.Y);
+				//	Point pos(item.X, item.Y);
 					auto iter = NeedLootPos.find(pos);
 					if (iter == NeedLootPos.end())
 						TrophyFilter.insert(pos);
@@ -1488,12 +1510,12 @@ public:
 	}
 	int32_t ReloadPollutantGateName() 
 	{
+		//////////////////////////////////////////////////////////////污染地穴门
 		PollutantGateName.clear();
 		fstream file;
 		wstring strPath = szModulePath;
 		strPath += L"\\gatename.txt";
 		file.open(strPath, ios::in | ios::binary);
-	//	file.open(L"d:\\test.txt", ios::in | ios::binary);
 		do
 		{
 			wstring name;
@@ -1503,9 +1525,9 @@ public:
 			name = buff;
 			if (name.size() > 0)
 				PollutantGateName.insert(name);
-		//	MessageBox(name.c_str());
 		} while (!file.eof());
 		file.close();
+		///////////////////////////////////////////////////////////////////////////////
 		//优先攻击怪物
 		PriorMonsterName.clear();
 		strPath = szModulePath;
@@ -1522,6 +1544,22 @@ public:
 			if (name.size() > 0)
 				PriorMonsterName.insert(std::make_pair(name,nPrior));
 			//	MessageBox(name.c_str());
+		} while (!file.eof());
+		file.close();
+		///////////////////////////////////////////////名称拾取列表
+		MustLootList.clear();
+		strPath = szModulePath;
+		strPath += L"\\LootName.txt";
+		file.open(strPath, ios::in | ios::binary);
+		do
+		{
+			wstring name;
+			wchar_t buff[11] = { 0 };
+			file.read((char*)buff, 22);
+			name = buff;
+		
+			if (name.size() > 0)
+				MustLootList.insert(name);
 		} while (!file.eof());
 		file.close();
 
@@ -1803,7 +1841,7 @@ public:
 				if (pBag->Items[i].SocketsContact[d] > 2)//检测三色孔
 				{
 					int SocketColor = 0;
-					for (int j = begin; j <= (pBag->Items[i].SocketsContact[d] + begin); ++j)
+					for (int j = begin; j < (pBag->Items[i].SocketsContact[d] + begin); ++j)
 					{
 						switch (pBag->Items[i].Sockets[j])
 						{
@@ -1895,7 +1933,7 @@ public:
 				temp.Name.push_back(pBag->Items[i].Name[j]);
 				temp.Name.push_back(pBag->Items[i].Name[j + 1]);
 			}
-//#ifndef NO_DEBUG
+#ifndef NO_DEBUG
 			for (int j = 0; j < 192; j += 2)
 			{
 				if (pBag->Items[i].InterfaceName[j] == 0 && pBag->Items[i].InterfaceName[j + 1] == 0)
@@ -1903,7 +1941,7 @@ public:
 				temp.TypeName.push_back(pBag->Items[i].InterfaceName[j]);
 				temp.TypeName.push_back(pBag->Items[i].InterfaceName[j + 1]);
 			}
-//#endif		
+#endif		
 			for (int k = 0; k < 14; ++k)
 			{
 				for (int j = 0; j < 32; j += 2)
