@@ -905,6 +905,57 @@ class ItemFullInfo {
 
 void swap(ItemFullInfo &a, ItemFullInfo &b);
 
+typedef struct _ItemPropertyInfo__isset {
+  _ItemPropertyInfo__isset() : Name(false), Property(false) {}
+  bool Name;
+  bool Property;
+} _ItemPropertyInfo__isset;
+
+class ItemPropertyInfo {
+ public:
+
+  static const char* ascii_fingerprint; // = "C03D7C85121043765890096FFEB06BBE";
+  static const uint8_t binary_fingerprint[16]; // = {0xC0,0x3D,0x7C,0x85,0x12,0x10,0x43,0x76,0x58,0x90,0x09,0x6F,0xFE,0xB0,0x6B,0xBE};
+
+  ItemPropertyInfo() {
+  }
+
+  virtual ~ItemPropertyInfo() throw() {}
+
+  std::vector<int8_t>  Name;
+  std::vector<int8_t>  Property;
+
+  _ItemPropertyInfo__isset __isset;
+
+  void __set_Name(const std::vector<int8_t> & val) {
+    Name = val;
+  }
+
+  void __set_Property(const std::vector<int8_t> & val) {
+    Property = val;
+  }
+
+  bool operator == (const ItemPropertyInfo & rhs) const
+  {
+    if (!(Name == rhs.Name))
+      return false;
+    if (!(Property == rhs.Property))
+      return false;
+    return true;
+  }
+  bool operator != (const ItemPropertyInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ItemPropertyInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+void swap(ItemPropertyInfo &a, ItemPropertyInfo &b);
+
 typedef struct _TrophyBaseInfo__isset {
   _TrophyBaseInfo__isset() : ObjPtr(false), X(false), Y(false) {}
   bool ObjPtr;
@@ -1145,6 +1196,57 @@ class LootType {
 };
 
 void swap(LootType &a, LootType &b);
+
+typedef struct _NPCMenuInfo__isset {
+  _NPCMenuInfo__isset() : ID(false), Text(false) {}
+  bool ID;
+  bool Text;
+} _NPCMenuInfo__isset;
+
+class NPCMenuInfo {
+ public:
+
+  static const char* ascii_fingerprint; // = "C69B8D458340D01227B2A605EFE33F77";
+  static const uint8_t binary_fingerprint[16]; // = {0xC6,0x9B,0x8D,0x45,0x83,0x40,0xD0,0x12,0x27,0xB2,0xA6,0x05,0xEF,0xE3,0x3F,0x77};
+
+  NPCMenuInfo() : ID(0) {
+  }
+
+  virtual ~NPCMenuInfo() throw() {}
+
+  int32_t ID;
+  std::vector<int8_t>  Text;
+
+  _NPCMenuInfo__isset __isset;
+
+  void __set_ID(const int32_t val) {
+    ID = val;
+  }
+
+  void __set_Text(const std::vector<int8_t> & val) {
+    Text = val;
+  }
+
+  bool operator == (const NPCMenuInfo & rhs) const
+  {
+    if (!(ID == rhs.ID))
+      return false;
+    if (!(Text == rhs.Text))
+      return false;
+    return true;
+  }
+  bool operator != (const NPCMenuInfo &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const NPCMenuInfo & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+void swap(NPCMenuInfo &a, NPCMenuInfo &b);
 
 }} // namespace
 

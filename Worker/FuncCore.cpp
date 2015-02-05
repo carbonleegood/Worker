@@ -40,6 +40,11 @@ FP_AutoSkillUp AutoSkillUp;
 FP_IsBuffExists IsBuffExists;
 FP_IsItemOnMouse IsItemOnMouse;
 FP_GetDescription GetDescription;
+FP_ReadNPCMenu ReadNPCMenu;
+FP_ReadHideoutServiceID ReadHideoutServiceID;
+FP_CallTransHidout CallTransHidout;
+FP_CallClickItem CallClickItem;
+FP_CallCtrlMoveItem CallCtrlMoveItem;
 int DrawMap(unsigned char* p, DWORD x, DWORD y);
 extern TCHAR szModulePath[MAX_PATH];
 #ifdef VM_PROTECT
@@ -95,6 +100,11 @@ bool InitGobalData()
 
 	IsItemOnMouse = (FP_IsItemOnMouse)(*(p + 18));
 
+	ReadNPCMenu = (FP_ReadNPCMenu)(*(p + 19));
+
+	ReadHideoutServiceID = (FP_ReadHideoutServiceID)(*(p + 20));
+	
+
 	CallMove = (FP_CallMove)(*(p + 201));
 
 	CallUnTargetSkill = (FP_CallUnTargetSkill)(*(p + 202));
@@ -130,6 +140,12 @@ bool InitGobalData()
 	CallIdentify = (FP_CallIdentify)(*(p + 218));
 
 	GetDescription = (FP_GetDescription)(*(p + 219));
+
+	CallTransHidout=(FP_CallTransHidout)(*(p+220));
+
+	CallClickItem=(FP_CallClickItem)(*(p+221));
+
+	CallCtrlMoveItem = (FP_CallCtrlMoveItem)(*(p + 222));
 	
 	SetIsDLl(TRUE);
 #ifdef VM_PROTECT

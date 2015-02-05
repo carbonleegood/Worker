@@ -38,6 +38,7 @@ int ContainerType;
  int SellServiceID;
  int SellWinID;
  int StoragePageNum;
+ int StroagePageNZNum;//≤÷ø‚“≥ƒ⁄÷√ID
  int nStoragePageObjPtr;
  int TargetStackServiceID;
  int StorageLeft;
@@ -58,3 +59,5 @@ int ContainerType;
  int nBuffExist;
 
  int DescribItemObjPtr;
+
+ NPCMenuItem NPCMenuList[20];
