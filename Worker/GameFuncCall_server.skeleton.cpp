@@ -41,7 +41,7 @@ wchar_t WaypointType[] = L"Metadata/MiscellaneousObjects/Waypoint";//传送点
 wchar_t StorageType[] = L"Metadata/MiscellaneousObjects/Stash";//仓库
 wchar_t DoodadType[] = L"Metadata/MiscellaneousObjects/Doodad";
 
-wchar_t NPCType[] = L"Metadata/NPC/Act";
+wchar_t NPCType[] = L"Metadata/NPC/";
 wchar_t GobattleTransferDoorType[] = L"Metadata/MiscellaneousObjects/TownPortal";
 wchar_t GobackTransferDoorType[] = L"Metadata/MiscellaneousObjects/PlayerPortal";
 wchar_t CrossAreaType[] = L"Metadata/MiscellaneousObjects/AreaTransition";
@@ -244,9 +244,42 @@ __inline bool IsTransDoorType(BYTE* pName)
 class GameFuncCallHandler : virtual public GameFuncCallIf 
 {
 public:
+	map<wstring, int> NPCList;
 	GameFuncCallHandler() 
 	{
 		// Your initialization goes here
+		wstring strTargetNPCName;
+
+		strTargetNPCName = L"奈莎";
+		NPCList.insert(std::make_pair(strTargetNPCName, 1));
+
+		strTargetNPCName = L"古斯特";
+		NPCList.insert(std::make_pair(strTargetNPCName, 2));
+		//case 3:
+		strTargetNPCName = L"賀根";
+		NPCList.insert(std::make_pair(strTargetNPCName, 3));
+		//	case 4:
+		strTargetNPCName = L"護甲大師哈庫";
+		NPCList.insert(std::make_pair(strTargetNPCName, 4));
+		//	case 5:
+		strTargetNPCName = L"亡靈大師卡塔莉娜";
+		NPCList.insert(std::make_pair(strTargetNPCName, 5));
+		//	case 6:
+		strTargetNPCName = L"武器大師瓦甘";
+		NPCList.insert(std::make_pair(strTargetNPCName, 6));
+		//	case 7:
+		strTargetNPCName = L"刺殺大師瓦里西";
+		NPCList.insert(std::make_pair(strTargetNPCName, 7));
+		//	case 8:
+		strTargetNPCName = L"博學大師艾爾雷恩";
+		NPCList.insert(std::make_pair(strTargetNPCName, 8));
+		//	case 9:
+		strTargetNPCName = L"狩獵大師托菈";
+		NPCList.insert(std::make_pair(strTargetNPCName, 9));
+		//case 10:
+		strTargetNPCName = L"製圖大師札娜";
+		NPCList.insert(std::make_pair(strTargetNPCName, 10));
+
 	}
 
 	int32_t SetUID(const std::string& strUID, const std::string& strPWD) 
@@ -408,6 +441,11 @@ public:
 						{
 							nPrior = iter->second;
 						}
+						int nPos=strName.find(L"圖騰");
+						if (nPos >= 0)
+						{
+							nPrior |= 128;
+						}
 					}
 				}
 				else if (IsBox(pTempRoundList->InterfaceName))
@@ -547,11 +585,11 @@ public:
 			temp.EnemyID = pTempRoundList->EnemyID;
 			temp.HP = pTempRoundList->HP;
 			temp.ID = pTempRoundList->ID;
-			/*temp.Level = pTempRoundList->Level;
-			temp.MaxHP = pTempRoundList->MaxHP;*/
+			temp.Level = pTempRoundList->Level;
+			temp.MaxHP = pTempRoundList->MaxHP;
 
-			temp.Level = pTempRoundList->TargetAble;
-			temp.MaxHP = pTempRoundList->Unknow;
+			//temp.Level = pTempRoundList->TargetAble;
+			//temp.MaxHP = pTempRoundList->Unknow;
 
 			temp.X = pTempRoundList->X2;
 			temp.Y = pTempRoundList->Y2;
@@ -1307,7 +1345,65 @@ public:
 		}
 		return ret;
 	}
-
+	int32_t GetNearbyWaypointPos()
+	{
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		for (int i = 0; i < 1000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			//暂时只保留了怪物
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsWaypoint(pTempRoundList->InterfaceName))
+				{
+					ret = pTempRoundList->X2<<16;
+					ret |= pTempRoundList->Y2;
+					break;
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
+	int32_t GetNearbyWaypointObjPtr()
+	{
+		// Your implementation goes here
+		//printf("GetNearbyWaypointObjPtr\n");
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		for (int i = 0; i < 1000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			//暂时只保留了怪物
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsWaypoint(pTempRoundList->InterfaceName))
+				{
+					ret = pTempRoundList->mem2;
+					break;
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
 	int32_t GetNearbySellNPCObjPtr(const int32_t NPCNum) 
 	{
 		int32_t ret = 0;
@@ -1324,6 +1420,27 @@ public:
 			break;
 		case 3:
 			strTargetNPCName = L"賀根";
+			break;
+		case 4:
+			strTargetNPCName = L"護甲大師哈庫";
+			break;
+		case 5:
+			strTargetNPCName = L"亡靈大師卡塔莉娜";
+			break;
+		case 6:
+			strTargetNPCName = L"武器大師瓦甘";
+			break;
+		case 7:
+			strTargetNPCName = L"刺殺大師瓦里西";
+			break;
+		case 8:
+			strTargetNPCName = L"博學大師艾爾雷恩";
+			break;
+		case 9:
+			strTargetNPCName = L"狩獵大師托菈";
+			break;
+		case 10:
+			strTargetNPCName = L"製圖大師札娜";
 			break;
 		}
 		for (int i = 0; i < 3000; ++i)
@@ -1344,6 +1461,45 @@ public:
 					if (strName == strTargetNPCName)
 					{
 						ret = pTempRoundList->mem2;
+						break;
+					}
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
+	
+	int64_t GetNearbySellNPCPos()
+	{
+		// Your implementation goes here
+		//printf("GetNearbySellNPCPos\n");
+		int64_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			//暂时只保留了怪物
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsNPC(pTempRoundList->InterfaceName))
+				{
+					wstring strName = (wchar_t*)pTempRoundList->Name;
+					auto iter=NPCList.find(strName);
+					if (iter != NPCList.end())
+					{
+						ret = iter->second;
+						ret = ret << 32;
+						ret |= pTempRoundList->X2 << 16;
+						ret |= pTempRoundList->Y2;
 						break;
 					}
 				}
@@ -1441,6 +1597,36 @@ public:
 		}
 		return ret;
 	}
+	int32_t GetNearbyStoragePos()
+	{
+		// Your implementation goes here
+		//printf("GetNearbyStoragePos\n");
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsStorage(pTempRoundList->InterfaceName))
+				{
+					ret = pTempRoundList->X2 << 16;
+					ret |= pTempRoundList->Y2;
+					break;
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
 	int32_t GetNearbyCrossObjPtr()
 	{
 		// Your implementation goes here
@@ -1464,7 +1650,9 @@ public:
 					CStringW strName = (wchar_t*)pTempRoundList->Name;
 					if (strName == L"樓梯")
 					{
-						ret = pTempRoundList->mem2;
+						//ret = pTempRoundList->mem2;
+						ret = pTempRoundList->X2 << 16;
+						ret |= pTempRoundList->Y2;
 						break;
 					}
 				}
@@ -1508,6 +1696,44 @@ public:
 		}
 		return ret;
 	}
+	int32_t GetNearbyOutPollutantGatePos()
+	{
+		// Your implementation goes here
+		//printf("GetNearbyOutPollutantGatePos\n");
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsCrossArea(pTempRoundList->InterfaceName))
+				{
+					wstring strName = (wchar_t*)pTempRoundList->Name;
+					auto iter = PollutantGateName.find(strName);
+					//if (strName == L"遺落地窖")
+					if (iter != PollutantGateName.end())
+					{
+						ret = pTempRoundList->X2<<16;
+						ret |= pTempRoundList->Y2;
+						break;
+					}
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+		//return 0;
+	}
+
 	int32_t ReloadPollutantGateName() 
 	{
 		//////////////////////////////////////////////////////////////污染地穴门
@@ -1690,7 +1916,7 @@ public:
 	{
 		// Your implementation goes here
 		SendMessage(hGameWnd, WM_LG_CALL, F_ReadStorageUI, PageNum);
-		return ReadPageUIRet;
+		return StroagePageNZNum;
 	}
 	int32_t ReadStoragePageNum()
 	{
@@ -1951,10 +2177,131 @@ public:
 					temp.DescribInfo.push_back(pBag->Items[i].StatDescriptions[k][j]);
 					temp.DescribInfo.push_back(pBag->Items[i].StatDescriptions[k][j + 1]);
 				}
+				temp.DescribInfo.push_back(124);
+				temp.DescribInfo.push_back(0);
 			//	temp.DescribInfo.push_back()
 			}
 			_return.push_back(temp);
 		}
+	}
+	void GetBagItemPropertyInfo(std::vector<ItemPropertyInfo> & _return) 
+	{
+		// Your implementation goes here
+		//printf("GetBagItemPropertyInfo\n");
+#ifndef NO_DEBUG
+		::OutputDebugString(L"GetBagItemPropertyInfo\n");
+#endif
+		// Your implementation goes here
+		ContainerType = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
+		for (int i = 0; i < dwBagItemCount; ++i)
+		{
+			GetItemDescription(pBag->Items[i].ObjPtr);
+		}
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
+		for (int i = 0; i < dwBagItemCount; ++i)
+		{
+			ItemPropertyInfo temp;
+			for (int j = 0; j < 64; j += 2)
+			{
+				if (pBag->Items[i].Name[j] == 0 && pBag->Items[i].Name[j + 1] == 0)
+					break;
+				temp.Name.push_back(pBag->Items[i].Name[j]);
+				temp.Name.push_back(pBag->Items[i].Name[j + 1]);
+			}	
+			for (int k = 0; k < 14; ++k)
+			{
+				for (int j = 0; j < 32; j += 2)
+				{
+					if (pBag->Items[i].StatDescriptions[k][j] == 0 && pBag->Items[i].StatDescriptions[k][j + 1] == 0)
+						break;
+					temp.Property.push_back(pBag->Items[i].StatDescriptions[k][j]);
+					temp.Property.push_back(pBag->Items[i].StatDescriptions[k][j + 1]);
+				}
+				temp.Property.push_back(124);
+				temp.Property.push_back(0);
+			}
+			_return.push_back(temp);
+		}
+	}
+	int32_t TransHideHome()
+	{
+		// Your implementation goes here
+		//printf("TransHideHome\n");
+		int nServiceID = 0;
+		nServiceID=ReadHideoutServiceID();
+		if (nServiceID == 0)
+			return 1;
+		SendMessage(hGameWnd, WM_LG_CALL, F_TransHideHome, nServiceID);
+		return 0;
+	}
+
+	void GetNPCMenuInfo(std::vector<NPCMenuInfo> & _return)
+	{
+		// Your implementation goes here 
+		//printf("GetNPCMenuInfo\n");
+		memset(NPCMenuList, 0, sizeof(NPCMenuItem)* 20);
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetNPCMenuInfo, NULL);		
+		for (int i = 0; i < 20; ++i)
+		{
+			NPCMenuInfo temp;
+			temp.ID=NPCMenuList[i].ID;
+			
+			for (int j = 0; j < 32; j += 2)
+			{
+
+				if (NPCMenuList[i].Text[j] == 0 && NPCMenuList[i].Text[j + 1] == 0)
+					break;
+				temp.Text.push_back(NPCMenuList[i].Text[j]);
+				temp.Text.push_back(NPCMenuList[i].Text[j+1]);
+			}
+			if (temp.ID == 0&&temp.Text.size()<1)
+				break;
+			_return.push_back(temp);
+		}
+		return;
+	}
+	int32_t ClickNPCSellMenu() 
+	{
+		// Your implementation goes here
+	//	printf("ClickNPCSellMenu\n");
+		memset(NPCMenuList, 0, sizeof(NPCMenuItem)* 20);
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetNPCMenuInfo, NULL);
+		int nID = -1;
+		for (int i = 0; i < 20; ++i)
+		{
+			wstring text =(wchar_t*) NPCMenuList[i].Text;
+			if (text == _T("販賣物品"))
+			{
+				nID = NPCMenuList[i].ID;
+				break;
+			}
+		}
+		if (nID == -1)
+		{
+			return 1;
+		}
+		else
+		{
+			SendMessage(hGameWnd, WM_LG_CALL, F_ClickNPCMenu, nID);
+			return 0;
+		}
+	}
+	int32_t LeftClickItem(const int32_t BagObjPtr, const int32_t ItemServiceID) 
+	{
+		// Your implementation goes here
+		PickBagPtr = BagObjPtr;
+		PicupServiceID = ItemServiceID;
+		SendMessage(hGameWnd, WM_LG_CALL, F_LeftClickItem, NULL);
+		return 0;
+	}
+	int32_t SaveToStorage(const int32_t StoragePageNum, const int32_t ItemServiceID) 
+	{
+		// Your implementation goes here
+	//	printf("SaveToStorage\n");
+		PicupServiceID = ItemServiceID;
+		SendMessage(hGameWnd, WM_LG_CALL, F_SaveToStorage, StoragePageNum);
+		return 0;
 	}
 };
 

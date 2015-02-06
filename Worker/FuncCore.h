@@ -39,6 +39,10 @@ enum FuncCode
 	F_ItemOnMouse,
 	F_BuffExist,
 	F_GetItemDescrib,
+	F_GetNPCMenuInfo,
+	F_TransHideHome,
+	F_LeftClickItem,//左键点击物品CALL
+	F_SaveToStorage,//直接存储到仓库
 };
 //extern ::CRITICAL_SECTION cs_core;
 //extern ::CONDITION_VARIABLE cv_core;
@@ -227,7 +231,7 @@ extern FP_GetStoragePageInfo GetStoragePageInfo;
 
 
 //FZ_ReadStorageUIPTR
-typedef  ULONG(__stdcall*FP_ReadStorageUIPTR)(ULONG StoragePageNum);
+typedef  ULONG(__stdcall*FP_ReadStorageUIPTR)(ULONG StoragePageNum,ULONG* pStoragePageNZNum);//第2个参数是获取内置参数的
 extern FP_ReadStorageUIPTR ReadStorageUIPTR;
 
 
@@ -255,3 +259,18 @@ extern FP_IsItemOnMouse IsItemOnMouse;
 
 typedef  ULONG(__stdcall*FP_GetDescription)(ULONG ItemObjPtr);
 extern FP_GetDescription GetDescription;
+
+typedef  ULONG(__stdcall*FP_ReadNPCMenu)(NPCMenuItem* pNPCMenuList);
+extern FP_ReadNPCMenu ReadNPCMenu;
+
+typedef  ULONG(__stdcall*FP_ReadHideoutServiceID)();
+extern FP_ReadHideoutServiceID ReadHideoutServiceID;
+
+typedef  ULONG(__stdcall*FP_CallTransHidout)(ULONG ServiceID);
+extern FP_CallTransHidout CallTransHidout;
+
+typedef  ULONG(__stdcall*FP_CallClickItem)(ULONG BagObjPtr, ULONG ServiceID,ULONG ctrl);
+extern FP_CallClickItem CallClickItem;
+
+typedef  ULONG(__stdcall*FP_CallCtrlMoveItem)(ULONG StoragePageNum, ULONG ServiceID,ULONG MoveFlag);
+extern FP_CallCtrlMoveItem CallCtrlMoveItem;

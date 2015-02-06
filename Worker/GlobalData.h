@@ -158,6 +158,7 @@ extern int SellServiceID;
 extern int SellWinID;
 
 extern int StoragePageNum;
+extern  int StroagePageNZNum;
 extern int nStoragePageObjPtr;
 extern  int TargetStackServiceID;
 extern int StorageLeft;
@@ -225,3 +226,10 @@ struct Point
 		return *this;
 	}
 };
+
+struct NPCMenuItem
+{
+	ULONG ID;
+	char Text[32];
+};
+extern NPCMenuItem NPCMenuList[20];

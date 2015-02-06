@@ -100,7 +100,7 @@ void DispatchCall(WPARAM wParam, LPARAM lParam)
 			nRet = GetStoragePageInfo(StoragePageNum);
 			break;
 		case F_ReadStorageUI:
-			ReadPageUIRet = ReadStorageUIPTR(lParam);
+			ReadPageUIRet = ReadStorageUIPTR(lParam,(ULONG*)&StroagePageNZNum);
 			break;
 		case F_ReadStoragePageNum:
 			StoragePageCount = ReadStoragePageCount();
@@ -119,6 +119,18 @@ void DispatchCall(WPARAM wParam, LPARAM lParam)
 			break;
 		case F_GetItemDescrib:
 			nRet = GetDescription(lParam);
+			break;
+		case F_GetNPCMenuInfo:
+			nRet = ReadNPCMenu(NPCMenuList);
+			break;
+		case F_TransHideHome:
+			nRet = CallTransHidout(lParam);
+			break;
+		case F_LeftClickItem:
+			nRet = CallClickItem(PickBagPtr, PicupServiceID, 1);
+			break;
+		case F_SaveToStorage:
+			nRet = CallCtrlMoveItem(lParam, PicupServiceID,0);
 			break;
 		}
 	}

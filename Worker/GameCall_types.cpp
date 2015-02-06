@@ -1611,6 +1611,121 @@ void swap(ItemFullInfo &a, ItemFullInfo &b) {
   swap(a.__isset, b.__isset);
 }
 
+const char* ItemPropertyInfo::ascii_fingerprint = "C03D7C85121043765890096FFEB06BBE";
+const uint8_t ItemPropertyInfo::binary_fingerprint[16] = {0xC0,0x3D,0x7C,0x85,0x12,0x10,0x43,0x76,0x58,0x90,0x09,0x6F,0xFE,0xB0,0x6B,0xBE};
+
+uint32_t ItemPropertyInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->Name.clear();
+            uint32_t _size66;
+            ::apache::thrift::protocol::TType _etype69;
+            xfer += iprot->readListBegin(_etype69, _size66);
+            this->Name.resize(_size66);
+            uint32_t _i70;
+            for (_i70 = 0; _i70 < _size66; ++_i70)
+            {
+              xfer += iprot->readByte(this->Name[_i70]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.Name = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->Property.clear();
+            uint32_t _size71;
+            ::apache::thrift::protocol::TType _etype74;
+            xfer += iprot->readListBegin(_etype74, _size71);
+            this->Property.resize(_size71);
+            uint32_t _i75;
+            for (_i75 = 0; _i75 < _size71; ++_i75)
+            {
+              xfer += iprot->readByte(this->Property[_i75]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.Property = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t ItemPropertyInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("ItemPropertyInfo");
+
+  xfer += oprot->writeFieldBegin("Name", ::apache::thrift::protocol::T_LIST, 1);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->Name.size()));
+    std::vector<int8_t> ::const_iterator _iter76;
+    for (_iter76 = this->Name.begin(); _iter76 != this->Name.end(); ++_iter76)
+    {
+      xfer += oprot->writeByte((*_iter76));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Property", ::apache::thrift::protocol::T_LIST, 2);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->Property.size()));
+    std::vector<int8_t> ::const_iterator _iter77;
+    for (_iter77 = this->Property.begin(); _iter77 != this->Property.end(); ++_iter77)
+    {
+      xfer += oprot->writeByte((*_iter77));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(ItemPropertyInfo &a, ItemPropertyInfo &b) {
+  using ::std::swap;
+  swap(a.Name, b.Name);
+  swap(a.Property, b.Property);
+  swap(a.__isset, b.__isset);
+}
+
 const char* TrophyBaseInfo::ascii_fingerprint = "20CDC9D979DE694980EA2466496D8E68";
 const uint8_t TrophyBaseInfo::binary_fingerprint[16] = {0x20,0xCD,0xC9,0xD9,0x79,0xDE,0x69,0x49,0x80,0xEA,0x24,0x66,0x49,0x6D,0x8E,0x68};
 
@@ -1814,14 +1929,14 @@ uint32_t TrophyInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->Name.clear();
-            uint32_t _size66;
-            ::apache::thrift::protocol::TType _etype69;
-            xfer += iprot->readListBegin(_etype69, _size66);
-            this->Name.resize(_size66);
-            uint32_t _i70;
-            for (_i70 = 0; _i70 < _size66; ++_i70)
+            uint32_t _size78;
+            ::apache::thrift::protocol::TType _etype81;
+            xfer += iprot->readListBegin(_etype81, _size78);
+            this->Name.resize(_size78);
+            uint32_t _i82;
+            for (_i82 = 0; _i82 < _size78; ++_i82)
             {
-              xfer += iprot->readByte(this->Name[_i70]);
+              xfer += iprot->readByte(this->Name[_i82]);
             }
             xfer += iprot->readListEnd();
           }
@@ -1893,10 +2008,10 @@ uint32_t TrophyInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
   xfer += oprot->writeFieldBegin("Name", ::apache::thrift::protocol::T_LIST, 12);
   {
     xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->Name.size()));
-    std::vector<int8_t> ::const_iterator _iter71;
-    for (_iter71 = this->Name.begin(); _iter71 != this->Name.end(); ++_iter71)
+    std::vector<int8_t> ::const_iterator _iter83;
+    for (_iter83 = this->Name.begin(); _iter83 != this->Name.end(); ++_iter83)
     {
-      xfer += oprot->writeByte((*_iter71));
+      xfer += oprot->writeByte((*_iter83));
     }
     xfer += oprot->writeListEnd();
   }
@@ -1996,6 +2111,101 @@ void swap(LootType &a, LootType &b) {
   using ::std::swap;
   swap(a.Type, b.Type);
   swap(a.Color, b.Color);
+  swap(a.__isset, b.__isset);
+}
+
+const char* NPCMenuInfo::ascii_fingerprint = "C69B8D458340D01227B2A605EFE33F77";
+const uint8_t NPCMenuInfo::binary_fingerprint[16] = {0xC6,0x9B,0x8D,0x45,0x83,0x40,0xD0,0x12,0x27,0xB2,0xA6,0x05,0xEF,0xE3,0x3F,0x77};
+
+uint32_t NPCMenuInfo::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->ID);
+          this->__isset.ID = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_LIST) {
+          {
+            this->Text.clear();
+            uint32_t _size84;
+            ::apache::thrift::protocol::TType _etype87;
+            xfer += iprot->readListBegin(_etype87, _size84);
+            this->Text.resize(_size84);
+            uint32_t _i88;
+            for (_i88 = 0; _i88 < _size84; ++_i88)
+            {
+              xfer += iprot->readByte(this->Text[_i88]);
+            }
+            xfer += iprot->readListEnd();
+          }
+          this->__isset.Text = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t NPCMenuInfo::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  xfer += oprot->writeStructBegin("NPCMenuInfo");
+
+  xfer += oprot->writeFieldBegin("ID", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeI32(this->ID);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("Text", ::apache::thrift::protocol::T_LIST, 2);
+  {
+    xfer += oprot->writeListBegin(::apache::thrift::protocol::T_BYTE, static_cast<uint32_t>(this->Text.size()));
+    std::vector<int8_t> ::const_iterator _iter89;
+    for (_iter89 = this->Text.begin(); _iter89 != this->Text.end(); ++_iter89)
+    {
+      xfer += oprot->writeByte((*_iter89));
+    }
+    xfer += oprot->writeListEnd();
+  }
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(NPCMenuInfo &a, NPCMenuInfo &b) {
+  using ::std::swap;
+  swap(a.ID, b.ID);
+  swap(a.Text, b.Text);
   swap(a.__isset, b.__isset);
 }
 
