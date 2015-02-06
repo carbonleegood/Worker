@@ -441,7 +441,7 @@ public:
 						{
 							nPrior = iter->second;
 						}
-						int nPos=strName.find(L"ˆDòv");
+						int nPos = strName.find(L"ˆDòv");
 						if (nPos >= 0)
 						{
 							nPrior |= 128;
@@ -585,11 +585,11 @@ public:
 			temp.EnemyID = pTempRoundList->EnemyID;
 			temp.HP = pTempRoundList->HP;
 			temp.ID = pTempRoundList->ID;
-			temp.Level = pTempRoundList->Level;
-			temp.MaxHP = pTempRoundList->MaxHP;
+			/*temp.Level = pTempRoundList->Level;
+			temp.MaxHP = pTempRoundList->MaxHP;*/
 
-			//temp.Level = pTempRoundList->TargetAble;
-			//temp.MaxHP = pTempRoundList->Unknow;
+			temp.Level = pTempRoundList->TargetAble;
+			temp.MaxHP = pTempRoundList->Unknow;
 
 			temp.X = pTempRoundList->X2;
 			temp.Y = pTempRoundList->Y2;
