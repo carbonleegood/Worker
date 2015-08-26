@@ -36,6 +36,8 @@ wchar_t TrophyType[] = L"Metadata/MiscellaneousObjects/WorldItem";
 wchar_t DoorType[] = L"Metadata/MiscellaneousObjects/Door";
 wchar_t DoorType2[] = L"Metadata/MiscellaneousObjects/Lights/ScepterDoorLight";
 wchar_t DoorType3[] = L"Metadata/MiscellaneousObjects/Lights/IncaDoorLight";
+wchar_t DoorType4[] = L"Metadata/Terrain/Mountain/Belly/Objects/BellyArenaTransition";
+
 wchar_t BoxType[] = L"Metadata/Chests";//宝箱
 wchar_t WaypointType[] = L"Metadata/MiscellaneousObjects/Waypoint";//传送点
 wchar_t StorageType[] = L"Metadata/MiscellaneousObjects/Stash";//仓库
@@ -43,10 +45,14 @@ wchar_t DoodadType[] = L"Metadata/MiscellaneousObjects/Doodad";
 
 wchar_t NPCType[] = L"Metadata/NPC/";
 wchar_t GobattleTransferDoorType[] = L"Metadata/MiscellaneousObjects/TownPortal";
-wchar_t GobackTransferDoorType[] = L"Metadata/MiscellaneousObjects/PlayerPortal";
+wchar_t GobackTransferDoorType[] = L"Metadata/MiscellaneousObjects/PlayerPortal";// 回城传送门
+wchar_t GobackTransferDoorType2[] = L"Metadata/MiscellaneousObjects/MapReturnPortal";//永恒实验室回去的门
 wchar_t CrossAreaType[] = L"Metadata/MiscellaneousObjects/AreaTransition";
 
 wchar_t ShrineType[] = L"Metadata/Shrines";//神殿
+
+wchar_t LabTransDoorType[] = L"Metadata/MiscellaneousObjects/MapPortal";//实验室传送门
+wchar_t MapDeviceType[] = L"Metadata/MiscellaneousObjects/MapDevice";//地图装置
 
 extern TCHAR szModulePath[MAX_PATH];
 
@@ -69,6 +75,8 @@ __inline bool IsDoor(BYTE* pInterfaceName)
 	if (memcmp(DoorType2, pInterfaceName, sizeof(DoorType2)-2) == 0)
 		return true;
 	if (memcmp(DoorType3, pInterfaceName, sizeof(DoorType3)-2) == 0)
+		return true;
+	if (memcmp(DoorType4, pInterfaceName, sizeof(DoorType4)-2) == 0)
 		return true;
 	return false;
 }
@@ -106,6 +114,8 @@ __inline bool IsGobackTransferDoor(BYTE* pInterfaceName)
 {
 	if (memcmp(GobackTransferDoorType, pInterfaceName, sizeof(GobackTransferDoorType)-2) == 0)
 		return true;
+	if (memcmp(GobackTransferDoorType2, pInterfaceName, sizeof(GobackTransferDoorType2)-2) == 0)
+		return true;
 	return false;
 }
 __inline bool IsStorage(BYTE* pInterfaceName)
@@ -126,6 +136,19 @@ __inline bool IsShrine(BYTE* pInterfaceName)
 		return true;
 	return false;
 }
+__inline bool IsLabBattleTransDoor(BYTE* pInterfaceName)
+{
+	if (memcmp(LabTransDoorType, pInterfaceName, sizeof(LabTransDoorType)-2) == 0)
+		return true;
+	return false;
+}
+__inline bool IsMapDevice(BYTE* pInterfaceName)
+{
+	if (memcmp(MapDeviceType, pInterfaceName, sizeof(MapDeviceType)-2) == 0)
+		return true;
+	return false;
+}
+
 
 const char UnknowType = 0;
 const char byMonsterType = 1;
@@ -150,6 +173,9 @@ wchar_t QuiverType[] = L"Metadata/Items/Quivers";//弓箭包
 wchar_t QuestItemType[] = L"Metadata/Items/QuestItems";//任务物品
 wchar_t BeltType[] = L"Metadata/Items/Belts";//腰带
 wchar_t MapsType[] = L"Metadata/Items/Map";//地图
+wchar_t MapType[] = L"Metadata/Items/Maps/Map";//地图
+wchar_t JewelType[] = L"Metadata/Items/Jewels/";//天赋珠宝
+wchar_t CardType[] = L"Metadata/Items/DivinationCards/";//卡片
 
 __inline bool IsSkillStoneType(BYTE* pInterfaceName)
 {
@@ -217,7 +243,25 @@ __inline bool IsMapsType(BYTE* pInterfaceName)
 		return true;
 	return false;
 }
+__inline bool IsSingleMapsType(BYTE* pInterfaceName)
+{
+	if (memcmp(MapType, pInterfaceName, sizeof(MapType)-2) == 0)
+		return true;
+	return false;
+}
 
+__inline bool IsJewelType(BYTE* pInterfaceName)
+{
+	if (memcmp(JewelType, pInterfaceName, sizeof(JewelType)-2) == 0)
+		return true;
+	return false;
+}
+__inline bool IsCardType(BYTE* pInterfaceName)
+{
+	if (memcmp(CardType, pInterfaceName, sizeof(CardType)-2) == 0)
+		return true;
+	return false;
+}
 const char byTrophy_SkillStone = 1;//技能石
 const char byTrophy_Currency = 2;//卷轴宝石
 const char byTrophy_Flask = 3;//血瓶
@@ -230,6 +274,8 @@ const char byTrophy_Quiver = 9;//箭包
 const char byTrophy_QuestItem = 10;//任务物品
 const char byTrophy_Maps = 11;//地图
 const char byTrophy_Money = 12;//通货
+const char byTrophy_Jewel = 13;//技能宝石
+const char byTrophy_Card = 14;//技能宝石
 
 extern void MYTrancport(ULONG MapID, ULONG WaypointID);
 
@@ -245,6 +291,8 @@ class GameFuncCallHandler : virtual public GameFuncCallIf
 {
 public:
 	map<wstring, int> NPCList;
+	map<wstring, int> CrossDoorList;
+	std::set<wstring> PollutantGateName;
 	GameFuncCallHandler() 
 	{
 		// Your initialization goes here
@@ -259,26 +307,46 @@ public:
 		strTargetNPCName = L"賀根";
 		NPCList.insert(std::make_pair(strTargetNPCName, 3));
 		//	case 4:
-		strTargetNPCName = L"護甲大師哈庫";
+		strTargetNPCName = L"奇菈";
 		NPCList.insert(std::make_pair(strTargetNPCName, 4));
 		//	case 5:
-		strTargetNPCName = L"亡靈大師卡塔莉娜";
+		strTargetNPCName = L"護甲大師哈庫";
 		NPCList.insert(std::make_pair(strTargetNPCName, 5));
 		//	case 6:
-		strTargetNPCName = L"武器大師瓦甘";
+		strTargetNPCName = L"亡靈大師卡塔莉娜";
 		NPCList.insert(std::make_pair(strTargetNPCName, 6));
 		//	case 7:
-		strTargetNPCName = L"刺殺大師瓦里西";
+		strTargetNPCName = L"武器大師瓦甘";
 		NPCList.insert(std::make_pair(strTargetNPCName, 7));
 		//	case 8:
-		strTargetNPCName = L"博學大師艾爾雷恩";
+		strTargetNPCName = L"刺殺大師瓦里西";
 		NPCList.insert(std::make_pair(strTargetNPCName, 8));
 		//	case 9:
-		strTargetNPCName = L"狩獵大師托菈";
+		strTargetNPCName = L"博學大師艾爾雷恩";
 		NPCList.insert(std::make_pair(strTargetNPCName, 9));
-		//case 10:
-		strTargetNPCName = L"製圖大師札娜";
+		//	case 10:
+		strTargetNPCName = L"狩獵大師托菈";
 		NPCList.insert(std::make_pair(strTargetNPCName, 10));
+		//case 11:
+		strTargetNPCName = L"製圖大師札娜";
+		NPCList.insert(std::make_pair(strTargetNPCName, 11));
+
+		/////////////////////////////////////
+		wstring strDoorName;
+		strDoorName = L"樓梯";
+		CrossDoorList.insert(std::make_pair(strDoorName, 1));
+		strDoorName = L"競技場";
+		CrossDoorList.insert(std::make_pair(strDoorName, 2));
+		strDoorName = L"通道";
+		CrossDoorList.insert(std::make_pair(strDoorName, 3));
+		strDoorName = L"劍刃之環";
+		CrossDoorList.insert(std::make_pair(strDoorName, 4));
+		strDoorName = L"乾涸湖岸";
+		CrossDoorList.insert(std::make_pair(strDoorName, 5));
+
+		////////////////////////////////////////////////////////
+
+
 
 	}
 
@@ -354,39 +422,106 @@ public:
 		_return.x = PlayerPos.x;
 		_return.y = PlayerPos.y;
 	}
-
+	bool bMoveing = false;
+	bool bCasting = false;
 	void Move(const int32_t x, const int32_t y) 
 	{
 		// Your implementation goes here
 		MoveInfo.x = x;
 		MoveInfo.y = y;
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		//bMoveing = true;
 		SendMessage(hGameWnd, WM_LG_CALL, F_MOVE, NULL);
+		Sleep(30);
+		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
 		//printf("Move\n");
 	}
-
+	void StopMove()
+	{
+		bMoveing = false;
+		SendMessage(hGameWnd, WM_LG_CALL, F_StopMove, NULL);
+		//	printf("StopMove\n");
+	}
+	void CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType)
+	{
+#ifndef NO_DEBUG
+		::OutputDebugString(L"CastTargetSkill\n");
+#endif
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
+		// Your implementation goes here
+		SkillTargetObjPtr = TargetObjPtr;
+		SkillNum = skillNum;
+		SkillModel = castType;
+		//bCasting = true;
+		SendMessage(hGameWnd, WM_LG_CALL, F_CastTargetSkill, NULL);
+		Sleep(50);
+		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+	}
 	void CastUntargetSkill(const int16_t x, const int16_t y, const int16_t skillNum, const int16_t castType)
 	{
 		// Your implementation goes here
+		if (bCasting)
+		{
+			bCasting = false;		
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		untargetSkill.x = x;
 		untargetSkill.y = y;
 		untargetSkill.num = skillNum;
 		untargetSkill.type = castType;
 		SendMessage(hGameWnd, WM_LG_CALL, F_CastUntargetSkill, NULL);
+		Sleep(50);
+		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
 		//printf("CastUntargetSkill\n");
 	}
-	void CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType) 
+	void CastTargetSkillUncancel(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType)
 	{
-#ifndef NO_DEBUG
-		::OutputDebugString(L"CastTargetSkill\n");
-#endif
 		// Your implementation goes here
+		//printf("CastTargetSkillUncancel\n");
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		SkillTargetObjPtr = TargetObjPtr;
 		SkillNum = skillNum;
 		SkillModel = castType;
+		bCasting = true;
 		SendMessage(hGameWnd, WM_LG_CALL, F_CastTargetSkill, NULL);
 	}
+
+	void CastUntargetSkillUncancel(const int16_t x, const int16_t y, const int16_t skillNum, const int16_t castType) 
+	{
+		// Your implementation goes here
+		//printf("CastUntargetSkillUncancel\n");
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
+		untargetSkill.x = x;
+		untargetSkill.y = y;
+		untargetSkill.num = skillNum;
+		untargetSkill.type = castType;
+		bCasting = true;
+		SendMessage(hGameWnd, WM_LG_CALL, F_CastUntargetSkill, NULL);
+	}
+
 	std::set<Point> TrophyFilter;
-	std::set<wstring> PollutantGateName;
 	std::map<wstring,int> PriorMonsterName;
 	void GetRoundList(std::vector<ObjInfo> & _return)
 	{
@@ -501,14 +636,16 @@ public:
 				{
 					wstring strName = (wchar_t*)pTempRoundList->Name;
 					auto iter=PollutantGateName.find(strName);
+					auto iter2 = CrossDoorList.find(strName);
 					//L"遺落地窖"
-					if (strName == L"樓梯")
-					{
-						type = byCrossAreaDoor;
-					}
-					else if (iter != PollutantGateName.end())
+
+					if (iter != PollutantGateName.end())
 					{
 						type = byPollutantDoor;
+					}
+					else if (iter2 != CrossDoorList.end())
+					{
+						type = byCrossAreaDoor;
 					}
 					else 
 					{
@@ -651,12 +788,7 @@ public:
 			_return.TypeName.push_back(PlayerInfo.InterfaceName[j + 1]);
 		}*/
 	}
-	void StopMove() 
-	{
-		SendMessage(hGameWnd, WM_LG_CALL, F_StopMove, NULL);
-		// Your implementation goes here
-	//	printf("StopMove\n");
-	}
+
 	void GetMapData(MapInfo& _return) 
 	{
 #ifndef NO_DEBUG
@@ -682,10 +814,32 @@ public:
 
 	void ActiveTarget(const int32_t ObjPtr) 
 	{
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+	/*	if (bMoveing)
+		{
+			StopMove();
+		}*/
 		// Your implementation goes here
 		ActiveObjPtr = ObjPtr;
 		SendMessage(hGameWnd, WM_LG_CALL, F_ActiveTarget, NULL);
+		Sleep(200);
+		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
 	//	printf("ActiveTarget\n");
+	}
+	void ActiveAreaDoorByDungeon(const int32_t ObjPtr) 
+	{
+		// Your implementation goes here
+		//printf("ActiveAreaDoorByDungeon\n");
+		ActiveObjPtr = ObjPtr;
+		SendMessage(hGameWnd, WM_LG_CALL, F_ActiveAreaDoorByDungeon, NULL);
+		Sleep(200);
+		/*SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		::Sleep(1000);*/
+		SendMessage(hGameWnd, WM_LG_CALL, F_CreateNewDungeon, NULL);
 	}
 
 	void GetWaypointInfo(std::vector<WaypointInfo> & _return) 
@@ -727,8 +881,15 @@ public:
 	void Transport(const int32_t MapID, const int32_t WaypointID, const int32_t DungeonModel)
 	//void Transport(const int32_t MapID, const int32_t WaypointID) 
 	{
-		//CallTransport(MapID, WaypointID);
-	//	MYTrancport(MapID, WaypointID);
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		TransMapID = MapID;
 		TransWaypointID = WaypointID;
 		nDungeonModel = DungeonModel;
@@ -883,6 +1044,14 @@ public:
 			{
 				temp.Type = byTrophy_Maps;//地图
 			}
+			else if (IsJewelType(pBag->Items[i].InterfaceName))
+			{
+				temp.Type = byTrophy_Jewel;//
+			}
+			else if (IsCardType(pBag->Items[i].InterfaceName))
+			{
+				temp.Type = byTrophy_Card;//
+			}
 			else
 				temp.Type = UnknowType;
 
@@ -904,7 +1073,58 @@ public:
 #endif		
 			_return.push_back(temp);
 		}
+	}
+	void GetContainerMapItemList(std::vector<ItemInfo> & _return, const int32_t GetType) 
+	{
+		// Your implementation goes here
+		//printf("GetContainerMapItemList\n");
+		ContainerType = GetType;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
+		for (int i = 0; i < dwBagItemCount; ++i)
+		{
+			ItemInfo temp;
+			temp.WinID = pBag->WinID;
+			temp.BagObjPtr = pBag->Mem;////////////这里要注意
+			temp.ObjPtr = pBag->Items[i].ObjPtr;
+			temp.ID = pBag->Items[i].ID;
+			temp.Color = pBag->Items[i].Color;
+			temp.Count = pBag->Items[i].Count;
+			temp.MaxCount = pBag->Items[i].MaxCount;
+			temp.ServiceID = pBag->Items[i].ServiceID;
+			temp.Left = pBag->Items[i].Left;
+			temp.Top = pBag->Items[i].Top;
+			temp.Width = pBag->Items[i].Width;
+			temp.Height = pBag->Items[i].Height;
+			//if (pBag->Items[i].IsEquipment == 1 && pBag->Items[i].IsIdentity == 0)
+			//	temp.NeedIdentify = true;
+			//else
+				temp.NeedIdentify = false;
 
+			if (!IsSingleMapsType(pBag->Items[i].InterfaceName))
+				continue;
+			
+			temp.Type = byTrophy_Maps;//地图
+			
+			
+
+		/*	for (int j = 0; j < 64; j += 2)
+			{
+				if (pBag->Items[i].Name[j] == 0 && pBag->Items[i].Name[j + 1] == 0)
+					break;
+				temp.Name.push_back(pBag->Items[i].Name[j]);
+				temp.Name.push_back(pBag->Items[i].Name[j + 1]);
+			}
+#ifndef NO_DEBUG
+			for (int j = 0; j < 192; j += 2)
+			{
+				if (pBag->Items[i].InterfaceName[j] == 0 && pBag->Items[i].InterfaceName[j + 1] == 0)
+					break;
+				temp.TypeName.push_back(pBag->Items[i].InterfaceName[j]);
+				temp.TypeName.push_back(pBag->Items[i].InterfaceName[j + 1]);
+			}
+#endif		*/
+			_return.push_back(temp);
+		}
 	}
 
 	void GetCurrentMapInfo(WaypointInfo& _return) 
@@ -1092,6 +1312,14 @@ public:
 			{
 				nType = byTrophy_Maps;//地图
 			}
+			else if (IsJewelType(_TrophyInfo.InterfaceName))
+			{
+				nType = byTrophy_Jewel;//天赋珠宝
+			}
+			else if (IsCardType(_TrophyInfo.InterfaceName))
+			{
+				nType = byTrophy_Card;//天赋珠宝
+			}
 			else
 			{
 				nType = UnknowType;
@@ -1252,6 +1480,15 @@ public:
 
 	int32_t UseItem(const int32_t WinID, const int32_t ServiceID) 
 	{
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		// Your implementation goes here
 		//printf("UseItem\n");
 		UseItem_WinID = WinID;
@@ -1304,6 +1541,15 @@ public:
 
 	int32_t ReturnChoseRole() 
 	{
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		// Your implementation goes here
 		//printf("ReturnChoseRole\n");
 		SendMessage(hGameWnd, WM_LG_CALL, F_Logout, NULL);
@@ -1312,6 +1558,15 @@ public:
 
 	int32_t Relive(const int32_t ReliveType) 
 	{
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		// Your implementation goes here
 		SendMessage(hGameWnd, WM_LG_CALL, F_Relive, ReliveType);
 		return nCallRet;
@@ -1422,24 +1677,27 @@ public:
 			strTargetNPCName = L"賀根";
 			break;
 		case 4:
-			strTargetNPCName = L"護甲大師哈庫";
+			strTargetNPCName = L"奇菈";
 			break;
 		case 5:
-			strTargetNPCName = L"亡靈大師卡塔莉娜";
+			strTargetNPCName = L"護甲大師哈庫";
 			break;
 		case 6:
-			strTargetNPCName = L"武器大師瓦甘";
+			strTargetNPCName = L"亡靈大師卡塔莉娜";
 			break;
 		case 7:
-			strTargetNPCName = L"刺殺大師瓦里西";
+			strTargetNPCName = L"武器大師瓦甘";
 			break;
 		case 8:
-			strTargetNPCName = L"博學大師艾爾雷恩";
+			strTargetNPCName = L"刺殺大師瓦里西";
 			break;
 		case 9:
-			strTargetNPCName = L"狩獵大師托菈";
+			strTargetNPCName = L"博學大師艾爾雷恩";
 			break;
 		case 10:
+			strTargetNPCName = L"狩獵大師托菈";
+			break;
+		case 11:
 			strTargetNPCName = L"製圖大師札娜";
 			break;
 		}
@@ -1627,13 +1885,25 @@ public:
 		}
 		return ret;
 	}
+	double CalcDis(int px, int py, int tx, int ty)
+	{
+		ULONG x = abs(px - tx);
+		ULONG y = abs(py - ty);
+		return sqrt(x*x + y*y);
+	}
 	int32_t GetNearbyCrossObjPtr()
 	{
 		// Your implementation goes here
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetPlayerPos, NULL);
+		/*_return.x = PlayerPos.x;
+		_return.y = PlayerPos.y;*/
+		ULONG px = PlayerPos.x*0.092;
+		ULONG py = PlayerPos.y*0.092;
 		int32_t ret = 0;
 		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
 		RoundObjInfo* pTempRoundList = pRoundList;
 		byte type = 0;
+		double nearDis = 10000.0;
 		for (int i = 0; i < 3000; ++i)
 		{
 			if (!pTempRoundList->mem2)
@@ -1647,13 +1917,18 @@ public:
 			{
 				if (IsCrossArea(pTempRoundList->InterfaceName))
 				{
-					CStringW strName = (wchar_t*)pTempRoundList->Name;
-					if (strName == L"樓梯")
+					wstring strName = (wchar_t*)pTempRoundList->Name;
+					auto iter = CrossDoorList.find(strName);
+					if (iter == CrossDoorList.end())
+						continue;
+
+					double dis = CalcDis(px, py, pTempRoundList->X2, pTempRoundList->Y2);
+					if (dis < nearDis)
 					{
-						//ret = pTempRoundList->mem2;
-						ret = pTempRoundList->X2 << 16;
-						ret |= pTempRoundList->Y2;
-						break;
+						dis = nearDis;
+						//ret = pTempRoundList->X2 << 16;
+						//ret |= pTempRoundList->Y2;
+						ret = pTempRoundList->mem2;
 					}
 				}
 			}
@@ -1734,6 +2009,36 @@ public:
 		//return 0;
 	}
 
+	int32_t GetNearbyMapDeviceObjPtr()
+	{
+		// Your implementation goes here
+		//printf("GetNearbyMapDeviceObjPtr\n");
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsMapDevice(pTempRoundList->InterfaceName))
+				{
+					ret = pTempRoundList->mem2;
+					break;
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
+
 	int32_t ReloadPollutantGateName() 
 	{
 		//////////////////////////////////////////////////////////////污染地穴门
@@ -1753,6 +2058,10 @@ public:
 				PollutantGateName.insert(name);
 		} while (!file.eof());
 		file.close();
+		PollutantGateName.insert(L"遠古陵墓");
+		PollutantGateName.insert(L"遺忘水道");
+		PollutantGateName.insert(L"狩獵坑道");
+		PollutantGateName.insert(L"廢棄水壩");		
 		///////////////////////////////////////////////////////////////////////////////
 		//优先攻击怪物
 		PriorMonsterName.clear();
@@ -1789,21 +2098,6 @@ public:
 		} while (!file.eof());
 		file.close();
 
-		// Your implementation goes here
-	//	printf("ReloadPollutantGateName\n");
-		/*PollutantGateName.clear();
-		wfstream file;
-		wstring strPath = szModulePath;
-		strPath += L"\\gatename.txt";
-		file.open(strPath, ios::in);
-		file.imbue(locale(""));
-		do
-		{
-			wstring name;
-			file >> name;
-			if (name.size() > 0)
-				PollutantGateName.insert(name);
-		} while (!file.eof());*/
 		return PollutantGateName.size();
 	}
 
@@ -1844,6 +2138,104 @@ public:
 		file.close();
 		return n;
 	}
+	int32_t GetContainerPtr(const int32_t GetType)
+	{
+		// Your implementation goes here
+		//printf("GetContainerPtr\n");
+		ContainerType = GetType;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetBagItemList, NULL);
+		return pBag->Mem;
+	}
+
+	int32_t GetNearestLabBattleTransDoorPos(const int16_t px, const int16_t py)
+	{
+		// Your implementation goes here
+		//printf("GetNearestLabBattleTransDoorPos\n");
+		//SendMessage(hGameWnd, WM_LG_CALL, F_GetPlayerPos, NULL);
+		///*_return.x = PlayerPos.x;
+		//_return.y = PlayerPos.y;*/
+		//ULONG px = PlayerPos.x*0.092;
+		//ULONG py = PlayerPos.y*0.092;
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		double nearDis = 10000.0;
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsLabBattleTransDoor(pTempRoundList->InterfaceName))
+				{
+					wstring strName = (wchar_t*)pTempRoundList->Name;
+				//	auto iter = CrossDoorList.find(strName);
+					if (strName ==L"異界之門")
+						continue;
+
+					double dis = CalcDis(px, py, pTempRoundList->X2, pTempRoundList->Y2);
+					if (dis < nearDis)
+					{
+						dis = nearDis;
+						ret = pTempRoundList->X2 << 16;
+						ret |= pTempRoundList->Y2;
+						//ret = pTempRoundList->mem2;
+					}
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
+
+	int32_t GetNearestLabBattleTransDoorObjPtr(const int16_t px, const int16_t py)
+	{
+		// Your implementation goes here
+		//printf("GetNearestLabBattleTransDoorObjPtr\n");
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+		double nearDis = 10000.0;
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsLabBattleTransDoor(pTempRoundList->InterfaceName))
+				{
+					wstring strName = (wchar_t*)pTempRoundList->Name;
+					//	auto iter = CrossDoorList.find(strName);
+					if (strName == L"異界之門")
+						continue;
+
+					double dis = CalcDis(px, py, pTempRoundList->X2, pTempRoundList->Y2);
+					if (dis < nearDis)
+					{
+						dis = nearDis;
+						/*ret = pTempRoundList->X2 << 16;
+						ret |= pTempRoundList->Y2;*/
+						ret = pTempRoundList->mem2;
+					}
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
+	}
+
 
 	int32_t PickupItem(const int32_t BagObjPtr, const int32_t ItemServiceID)
 	{
@@ -1892,6 +2284,15 @@ public:
 	}
 	int32_t IdentityItem(const int32_t CurrencyServiceID, const int32_t ArmorServiceID)
 	{
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		// Your implementation goes here
 		//printf("IdentityItem\n");
 		IdentityCurrencyServiceID = CurrencyServiceID;
@@ -2149,6 +2550,14 @@ public:
 			{
 				temp.Type = byTrophy_Maps;//地图
 			}
+			else if (IsJewelType(pBag->Items[i].InterfaceName))
+			{
+				temp.Type = byTrophy_Jewel;//天赋珠宝
+			}
+			else if (IsCardType(pBag->Items[i].InterfaceName))
+			{
+				temp.Type = byTrophy_Card;//天赋珠宝
+			}
 			else
 				temp.Type = UnknowType;
 
@@ -2228,6 +2637,15 @@ public:
 	{
 		// Your implementation goes here
 		//printf("TransHideHome\n");
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		int nServiceID = 0;
 		nServiceID=ReadHideoutServiceID();
 		if (nServiceID == 0)
@@ -2289,6 +2707,15 @@ public:
 	}
 	int32_t LeftClickItem(const int32_t BagObjPtr, const int32_t ItemServiceID) 
 	{
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		/*if (bMoveing)
+		{
+			StopMove();
+		}*/
 		// Your implementation goes here
 		PickBagPtr = BagObjPtr;
 		PicupServiceID = ItemServiceID;
@@ -2302,6 +2729,45 @@ public:
 		PicupServiceID = ItemServiceID;
 		SendMessage(hGameWnd, WM_LG_CALL, F_SaveToStorage, StoragePageNum);
 		return 0;
+	}
+	int32_t StartLabBattleDoor()
+	{
+		// Your implementation goes here
+		//printf("StartLabBattleDoor\n");
+		SendMessage(hGameWnd, WM_LG_CALL, F_OpenLabDoor, 0);
+		return 0;
+	}
+
+	int32_t GetMapDeviceObjPtr()
+	{
+		// Your implementation goes here
+		//printf("GetMapDeviceObjPtr\n");
+		int32_t ret = 0;
+		SendMessage(hGameWnd, WM_LG_CALL, F_GetRoundList, NULL);
+		RoundObjInfo* pTempRoundList = pRoundList;
+		byte type = 0;
+
+		for (int i = 0; i < 3000; ++i)
+		{
+			if (!pTempRoundList->mem2)
+				break;
+			if (pTempRoundList->Name[0] == 0 && pTempRoundList->Name[1] == 0)
+			{
+				++pTempRoundList;
+				continue;
+			}
+			else
+			{
+				if (IsMapDevice(pTempRoundList->InterfaceName))
+				{
+					/*ret = pTempRoundList->X2 << 16;
+					ret |= pTempRoundList->Y2;*/
+					ret = pTempRoundList->mem2;
+				}
+			}
+			++pTempRoundList;
+		}
+		return ret;
 	}
 };
 

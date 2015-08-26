@@ -18,14 +18,15 @@ void DispatchCall(WPARAM wParam, LPARAM lParam)
 		{
 		case F_MOVE:
 			CallMove(MoveInfo.x, MoveInfo.y);
+		//	CallLButtonUP();
 			break;
 		case F_GetPlayerPos:
 			ReadPosition(&PlayerPos.x, &PlayerPos.y);
 			break;
 		case F_GetPlayerInfo:
 		{
-								void* p = ReadSelfInfo();
-								memcpy(&_PlayerInfo, p, sizeof(RoundObjInfo));
+			void* p = ReadSelfInfo();
+			memcpy(&_PlayerInfo, p, sizeof(RoundObjInfo));
 		}
 			break;
 		case F_GetMonsterList:
@@ -44,9 +45,13 @@ void DispatchCall(WPARAM wParam, LPARAM lParam)
 			MoveInfo.x = PlayerPos.x*0.092;
 			MoveInfo.y = PlayerPos.y*0.092;
 			CallMove(MoveInfo.x, MoveInfo.y);
+			CallLButtonUP();
 			break;
 		case F_ActiveTarget:
 			CallActiveNPC(ActiveObjPtr, 8);
+			break;
+		case F_ActiveAreaDoorByDungeon:
+			CallActiveNPC(ActiveObjPtr, 0x0C);
 			break;
 		case F_GetWaypointInfo:
 			pWaypointList = ReadTransportList();
@@ -132,6 +137,11 @@ void DispatchCall(WPARAM wParam, LPARAM lParam)
 		case F_SaveToStorage:
 			nRet = CallCtrlMoveItem(lParam, PicupServiceID,0);
 			break;
+		case F_LeftCancel:
+			nRet = CallLButtonUP();
+			break;
+		case F_OpenLabDoor:
+			nRet = CallYHOpen();
 		}
 	}
 	__except (1)

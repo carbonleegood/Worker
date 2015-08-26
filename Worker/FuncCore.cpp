@@ -45,6 +45,8 @@ FP_ReadHideoutServiceID ReadHideoutServiceID;
 FP_CallTransHidout CallTransHidout;
 FP_CallClickItem CallClickItem;
 FP_CallCtrlMoveItem CallCtrlMoveItem;
+FP_CallLButtonUP CallLButtonUP;
+FP_CallYHOpen CallYHOpen;
 int DrawMap(unsigned char* p, DWORD x, DWORD y);
 extern TCHAR szModulePath[MAX_PATH];
 #ifdef VM_PROTECT
@@ -147,6 +149,10 @@ bool InitGobalData()
 
 	CallCtrlMoveItem = (FP_CallCtrlMoveItem)(*(p + 222));
 	
+	CallLButtonUP = (FP_CallLButtonUP)(*(p + 223));
+
+	CallYHOpen = (FP_CallYHOpen)(*(p + 224));
+
 	SetIsDLl(TRUE);
 #ifdef VM_PROTECT
 	VMProtectEnd();

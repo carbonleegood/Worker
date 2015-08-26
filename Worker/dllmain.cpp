@@ -14,7 +14,7 @@ LONG WINAPI TopLevelUnhandleExceptionFilter(PEXCEPTION_POINTERS pExceptionInfo)
 {
 	return EXCEPTION_EXECUTE_HANDLER;
 }
-
+DWORD WINAPI ActiveReportThread(LPVOID lpParam);
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -33,7 +33,9 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		//	::MessageBoxA(0, "z◊¢»Î", "Ã· æ", 0);
 			bInit = true;
 			InitCore();
-			::SetUnhandledExceptionFilter(TopLevelUnhandleExceptionFilter);
+			HANDLE hThread=CreateThread(NULL, 0, ActiveReportThread, 0, 0, 0);
+			CloseHandle(hThread);
+		//	::SetUnhandledExceptionFilter(TopLevelUnhandleExceptionFilter);
 		}
 		break;
 	case DLL_THREAD_ATTACH:
@@ -46,7 +48,18 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 #endif
 	return TRUE;
 }
-
+#define WM_WORKER_EXIST    WM_USER+201
+DWORD WINAPI ActiveReportThread(LPVOID lpParam)
+{
+	while (true)
+	{
+		HWND hWnd = FindWindow(NULL, L"POEHelpMonite");
+		if (hWnd != NULL)
+			PostMessage(hWnd, WM_WORKER_EXIST, 0, 0);
+		Sleep(1000 * 30);
+	}
+	return 0;
+}
 #ifdef VM_PROTECT
 #pragma optimize( "g", on )
 #endif

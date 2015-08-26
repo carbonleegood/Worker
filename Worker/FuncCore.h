@@ -15,6 +15,7 @@ enum FuncCode
 	F_StopMove,
 	F_GetMapData,
 	F_ActiveTarget,
+	F_ActiveAreaDoorByDungeon,
 	F_GetWaypointInfo,//获取传送点信息
 	F_Transport,//传送
 	F_CreateNewDungeon,//传送进新副本
@@ -43,6 +44,8 @@ enum FuncCode
 	F_TransHideHome,
 	F_LeftClickItem,//左键点击物品CALL
 	F_SaveToStorage,//直接存储到仓库
+	F_LeftCancel,//取消CALL
+	F_OpenLabDoor,//确认开启实验室门
 };
 //extern ::CRITICAL_SECTION cs_core;
 //extern ::CONDITION_VARIABLE cv_core;
@@ -274,3 +277,15 @@ extern FP_CallClickItem CallClickItem;
 
 typedef  ULONG(__stdcall*FP_CallCtrlMoveItem)(ULONG StoragePageNum, ULONG ServiceID,ULONG MoveFlag);
 extern FP_CallCtrlMoveItem CallCtrlMoveItem;
+
+// 左键弹起CALL 取消连续操作
+// 参数 无
+// 返回值 0调用成功 1调用失败
+typedef  ULONG(__stdcall*FP_CallLButtonUP)();
+extern FP_CallLButtonUP CallLButtonUP;
+
+
+// 确认开启永痕传送门   ulong (*fp)(); 无参数
+//Funcs[224] : = XXOORR(@FZ_CallYHOpen);
+typedef  ULONG(__stdcall*FP_CallYHOpen)();
+extern FP_CallYHOpen CallYHOpen;

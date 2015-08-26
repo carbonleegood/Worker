@@ -11,7 +11,7 @@ struct GMoveInfo
 	ULONG y;
 };
 extern GMoveInfo MoveInfo;
-
+#pragma pack(push,1)
 struct RoundObjInfo
 {
 //Mem: ULONG;  // 地图块归属的指针
@@ -68,13 +68,15 @@ struct RoundObjInfo
 	BYTE IsNPC;
 	BYTE IsNPCAttackAble;
 	ULONG Color;//箱子、怪物的颜色等级0=白 1=蓝 2=金 3=暗金
-//	BYTE HashNames[200][32];
-//	BYTE HashIndexs[200];
+	//BYTE HashNames[200][32];
+	//BYTE HashIndexs[200];
+	BYTE NewByte;
 //HashNames: array[0 .. 199] of array[0 .. 31] of Byte;
 	// 二维数组 就是200*32个Byte占坑就可以了
 //HashIndexs: array[0 .. 199] of Byte;
 	// 200个Byte 这些都是方便调试的观察信息 虽然占空间但是没办法 不然调试很麻烦
 };
+#pragma pack (pop)
 extern RoundObjInfo _PlayerInfo;
 extern RoundObjInfo* pRoundList;
 

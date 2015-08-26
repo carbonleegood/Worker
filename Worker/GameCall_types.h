@@ -4,8 +4,8 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#ifndef GameCall_TYPES_H
-#define GameCall_TYPES_H
+#ifndef GameCallÁ÷Íö_TYPES_H
+#define GameCallÁ÷Íö_TYPES_H
 
 #include <thrift/Thrift.h>
 #include <thrift/TApplicationException.h>
