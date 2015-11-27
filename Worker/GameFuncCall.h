@@ -26,12 +26,14 @@ class GameFuncCallIf {
   virtual void GetPlayerInfo(PlayerInfo& _return) = 0;
   virtual void GetMapData(MapInfo& _return) = 0;
   virtual void Move(const int32_t x, const int32_t y) = 0;
+  virtual void MoGve(const int32_t x, const int32_t y) = 0;
   virtual void CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType) = 0;
   virtual void CastUntargetSkill(const int16_t x, const int16_t y, const int16_t skillNum, const int16_t castType) = 0;
   virtual void CastTargetSkillUncancel(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType) = 0;
   virtual void CastUntargetSkillUncancel(const int16_t x, const int16_t y, const int16_t skillNum, const int16_t castType) = 0;
   virtual void StopMove() = 0;
   virtual void ActiveTarget(const int32_t ObjPtr) = 0;
+  virtual void ActiveeTarget(const int32_t ObjPtr) = 0;
   virtual void ActiveAreaDoorByDungeon(const int32_t ObjPtr) = 0;
   virtual void GetWaypointInfo(std::vector<WaypointInfo> & _return) = 0;
   virtual void Transport(const int32_t MapID, const int32_t WaypointID, const int32_t DungeonModel) = 0;
@@ -157,6 +159,9 @@ class GameFuncCallNull : virtual public GameFuncCallIf {
   void Move(const int32_t /* x */, const int32_t /* y */) {
     return;
   }
+  void MoGve(const int32_t /* x */, const int32_t /* y */) {
+    return;
+  }
   void CastTargetSkill(const int32_t /* TargetObjPtr */, const int16_t /* skillNum */, const int16_t /* castType */) {
     return;
   }
@@ -173,6 +178,9 @@ class GameFuncCallNull : virtual public GameFuncCallIf {
     return;
   }
   void ActiveTarget(const int32_t /* ObjPtr */) {
+    return;
+  }
+  void ActiveeTarget(const int32_t /* ObjPtr */) {
     return;
   }
   void ActiveAreaDoorByDungeon(const int32_t /* ObjPtr */) {
@@ -1420,6 +1428,103 @@ class GameFuncCall_Move_presult {
 
 };
 
+typedef struct _GameFuncCall_MoGve_args__isset {
+  _GameFuncCall_MoGve_args__isset() : x(false), y(false) {}
+  bool x;
+  bool y;
+} _GameFuncCall_MoGve_args__isset;
+
+class GameFuncCall_MoGve_args {
+ public:
+
+  GameFuncCall_MoGve_args() : x(0), y(0) {
+  }
+
+  virtual ~GameFuncCall_MoGve_args() throw() {}
+
+  int32_t x;
+  int32_t y;
+
+  _GameFuncCall_MoGve_args__isset __isset;
+
+  void __set_x(const int32_t val) {
+    x = val;
+  }
+
+  void __set_y(const int32_t val) {
+    y = val;
+  }
+
+  bool operator == (const GameFuncCall_MoGve_args & rhs) const
+  {
+    if (!(x == rhs.x))
+      return false;
+    if (!(y == rhs.y))
+      return false;
+    return true;
+  }
+  bool operator != (const GameFuncCall_MoGve_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_MoGve_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_MoGve_pargs {
+ public:
+
+
+  virtual ~GameFuncCall_MoGve_pargs() throw() {}
+
+  const int32_t* x;
+  const int32_t* y;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_MoGve_result {
+ public:
+
+  GameFuncCall_MoGve_result() {
+  }
+
+  virtual ~GameFuncCall_MoGve_result() throw() {}
+
+
+  bool operator == (const GameFuncCall_MoGve_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const GameFuncCall_MoGve_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_MoGve_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_MoGve_presult {
+ public:
+
+
+  virtual ~GameFuncCall_MoGve_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 typedef struct _GameFuncCall_CastTargetSkill_args__isset {
   _GameFuncCall_CastTargetSkill_args__isset() : TargetObjPtr(false), skillNum(false), castType(false) {}
   bool TargetObjPtr;
@@ -2018,6 +2123,94 @@ class GameFuncCall_ActiveTarget_presult {
 
 
   virtual ~GameFuncCall_ActiveTarget_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _GameFuncCall_ActiveeTarget_args__isset {
+  _GameFuncCall_ActiveeTarget_args__isset() : ObjPtr(false) {}
+  bool ObjPtr;
+} _GameFuncCall_ActiveeTarget_args__isset;
+
+class GameFuncCall_ActiveeTarget_args {
+ public:
+
+  GameFuncCall_ActiveeTarget_args() : ObjPtr(0) {
+  }
+
+  virtual ~GameFuncCall_ActiveeTarget_args() throw() {}
+
+  int32_t ObjPtr;
+
+  _GameFuncCall_ActiveeTarget_args__isset __isset;
+
+  void __set_ObjPtr(const int32_t val) {
+    ObjPtr = val;
+  }
+
+  bool operator == (const GameFuncCall_ActiveeTarget_args & rhs) const
+  {
+    if (!(ObjPtr == rhs.ObjPtr))
+      return false;
+    return true;
+  }
+  bool operator != (const GameFuncCall_ActiveeTarget_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_ActiveeTarget_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_ActiveeTarget_pargs {
+ public:
+
+
+  virtual ~GameFuncCall_ActiveeTarget_pargs() throw() {}
+
+  const int32_t* ObjPtr;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_ActiveeTarget_result {
+ public:
+
+  GameFuncCall_ActiveeTarget_result() {
+  }
+
+  virtual ~GameFuncCall_ActiveeTarget_result() throw() {}
+
+
+  bool operator == (const GameFuncCall_ActiveeTarget_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const GameFuncCall_ActiveeTarget_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const GameFuncCall_ActiveeTarget_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class GameFuncCall_ActiveeTarget_presult {
+ public:
+
+
+  virtual ~GameFuncCall_ActiveeTarget_presult() throw() {}
 
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
@@ -8260,6 +8453,9 @@ class GameFuncCallClient : virtual public GameFuncCallIf {
   void Move(const int32_t x, const int32_t y);
   void send_Move(const int32_t x, const int32_t y);
   void recv_Move();
+  void MoGve(const int32_t x, const int32_t y);
+  void send_MoGve(const int32_t x, const int32_t y);
+  void recv_MoGve();
   void CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType);
   void send_CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType);
   void recv_CastTargetSkill();
@@ -8278,6 +8474,9 @@ class GameFuncCallClient : virtual public GameFuncCallIf {
   void ActiveTarget(const int32_t ObjPtr);
   void send_ActiveTarget(const int32_t ObjPtr);
   void recv_ActiveTarget();
+  void ActiveeTarget(const int32_t ObjPtr);
+  void send_ActiveeTarget(const int32_t ObjPtr);
+  void recv_ActiveeTarget();
   void ActiveAreaDoorByDungeon(const int32_t ObjPtr);
   void send_ActiveAreaDoorByDungeon(const int32_t ObjPtr);
   void recv_ActiveAreaDoorByDungeon();
@@ -8487,12 +8686,14 @@ class GameFuncCallProcessor : public ::apache::thrift::TDispatchProcessor {
   void process_GetPlayerInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetMapData(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Move(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_MoGve(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_CastTargetSkill(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_CastUntargetSkill(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_CastTargetSkillUncancel(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_CastUntargetSkillUncancel(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_StopMove(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_ActiveTarget(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_ActiveeTarget(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_ActiveAreaDoorByDungeon(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_GetWaypointInfo(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_Transport(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
@@ -8568,12 +8769,14 @@ class GameFuncCallProcessor : public ::apache::thrift::TDispatchProcessor {
     processMap_["GetPlayerInfo"] = &GameFuncCallProcessor::process_GetPlayerInfo;
     processMap_["GetMapData"] = &GameFuncCallProcessor::process_GetMapData;
     processMap_["Move"] = &GameFuncCallProcessor::process_Move;
+    processMap_["MoGve"] = &GameFuncCallProcessor::process_MoGve;
     processMap_["CastTargetSkill"] = &GameFuncCallProcessor::process_CastTargetSkill;
     processMap_["CastUntargetSkill"] = &GameFuncCallProcessor::process_CastUntargetSkill;
     processMap_["CastTargetSkillUncancel"] = &GameFuncCallProcessor::process_CastTargetSkillUncancel;
     processMap_["CastUntargetSkillUncancel"] = &GameFuncCallProcessor::process_CastUntargetSkillUncancel;
     processMap_["StopMove"] = &GameFuncCallProcessor::process_StopMove;
     processMap_["ActiveTarget"] = &GameFuncCallProcessor::process_ActiveTarget;
+    processMap_["ActiveeTarget"] = &GameFuncCallProcessor::process_ActiveeTarget;
     processMap_["ActiveAreaDoorByDungeon"] = &GameFuncCallProcessor::process_ActiveAreaDoorByDungeon;
     processMap_["GetWaypointInfo"] = &GameFuncCallProcessor::process_GetWaypointInfo;
     processMap_["Transport"] = &GameFuncCallProcessor::process_Transport;
@@ -8767,6 +8970,15 @@ class GameFuncCallMultiface : virtual public GameFuncCallIf {
     ifaces_[i]->Move(x, y);
   }
 
+  void MoGve(const int32_t x, const int32_t y) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->MoGve(x, y);
+    }
+    ifaces_[i]->MoGve(x, y);
+  }
+
   void CastTargetSkill(const int32_t TargetObjPtr, const int16_t skillNum, const int16_t castType) {
     size_t sz = ifaces_.size();
     size_t i = 0;
@@ -8819,6 +9031,15 @@ class GameFuncCallMultiface : virtual public GameFuncCallIf {
       ifaces_[i]->ActiveTarget(ObjPtr);
     }
     ifaces_[i]->ActiveTarget(ObjPtr);
+  }
+
+  void ActiveeTarget(const int32_t ObjPtr) {
+    size_t sz = ifaces_.size();
+    size_t i = 0;
+    for (; i < (sz - 1); ++i) {
+      ifaces_[i]->ActiveeTarget(ObjPtr);
+    }
+    ifaces_[i]->ActiveeTarget(ObjPtr);
   }
 
   void ActiveAreaDoorByDungeon(const int32_t ObjPtr) {

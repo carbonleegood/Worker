@@ -107,9 +107,9 @@ bool InitGobalData()
 	ReadHideoutServiceID = (FP_ReadHideoutServiceID)(*(p + 20));
 	
 
-	CallMove = (FP_CallMove)(*(p + 98));
+	CallMove = (FP_CallMove)(*(p + 66));
 
-	CallUnTargetSkill = (FP_CallUnTargetSkill)(*(p + 202));
+	CallUnTargetSkill = (FP_CallUnTargetSkill)(*(p + 102));
 
 	CallActiveNPC = (FP_CallActiveNPC)(*(p + 203));
 
