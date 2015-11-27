@@ -36,7 +36,7 @@ wchar_t TrophyType[] = L"Metadata/MiscellaneousObjects/WorldItem";
 wchar_t DoorType[] = L"Metadata/MiscellaneousObjects/Door";
 wchar_t DoorType2[] = L"Metadata/MiscellaneousObjects/Lights/ScepterDoorLight";
 wchar_t DoorType3[] = L"Metadata/MiscellaneousObjects/Lights/IncaDoorLight";
-wchar_t DoorType4[] = L"Metadata/Terrain/Mountain/Belly/Objects/BellyArenaTransition";
+//wchar_t DoorType4[] = L"Metadata/Terrain/Mountain/Belly/Objects/BellyArenaTransition";
 
 wchar_t BoxType[] = L"Metadata/Chests";//宝箱
 wchar_t WaypointType[] = L"Metadata/MiscellaneousObjects/Waypoint";//传送点
@@ -76,8 +76,8 @@ __inline bool IsDoor(BYTE* pInterfaceName)
 		return true;
 	if (memcmp(DoorType3, pInterfaceName, sizeof(DoorType3)-2) == 0)
 		return true;
-	if (memcmp(DoorType4, pInterfaceName, sizeof(DoorType4)-2) == 0)
-		return true;
+	//if (memcmp(DoorType4, pInterfaceName, sizeof(DoorType4)-2) == 0)
+	//	return true;
 	return false;
 }
 __inline bool IsBox(BYTE* pInterfaceName)
@@ -160,6 +160,8 @@ const char byStorageType = 6;//仓库
 const char byCrossAreaDoor = 7;//d地图连接门
 const char byShrineType = 8;//神殿
 const char byPollutantDoor = 9;//遗落地窖门
+const char byCrossAreaDoorLab = 10;
+const char byShrine = 11;
 /////////////////////////////////
 //宝石,血瓶,技能石,装备,戒指,项链
 wchar_t SkillStoneType[] = L"Metadata/Items/Gems";//技能石  SkillGem
@@ -343,6 +345,8 @@ public:
 		CrossDoorList.insert(std::make_pair(strDoorName, 4));
 		strDoorName = L"乾涸湖岸";
 		CrossDoorList.insert(std::make_pair(strDoorName, 5));
+		strDoorName = L"洞穴";
+		CrossDoorList.insert(std::make_pair(strDoorName, 6));
 
 		////////////////////////////////////////////////////////
 
@@ -427,6 +431,22 @@ public:
 	void Move(const int32_t x, const int32_t y) 
 	{
 		// Your implementation goes here
+		MoveInfo.x = y;
+		MoveInfo.y = x;
+		if (bCasting)
+		{
+			bCasting = false;
+			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		}
+		//bMoveing = true;
+		SendMessage(hGameWnd, WM_LG_CALL, F_MOVE, NULL);
+		Sleep(100);
+		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+		//printf("Move\n");
+	}
+	void MoGve(const int32_t x, const int32_t y)
+	{
+		// Your implementation goes here
 		MoveInfo.x = x;
 		MoveInfo.y = y;
 		if (bCasting)
@@ -438,7 +458,6 @@ public:
 		SendMessage(hGameWnd, WM_LG_CALL, F_MOVE, NULL);
 		Sleep(30);
 		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
-		//printf("Move\n");
 	}
 	void StopMove()
 	{
@@ -625,7 +644,7 @@ public:
 					//type = byShrineType;
 					//当成门处理
 					if (pTempRoundList->TargetAble == 1)
-						type = byDoorType;
+						type = byShrine;
 					else
 					{
 						++pTempRoundList;
@@ -649,6 +668,7 @@ public:
 					}
 					else 
 					{
+						//type = byCrossAreaDoorLab;
 						++pTempRoundList;
 						continue;
 					}
@@ -814,21 +834,41 @@ public:
 
 	void ActiveTarget(const int32_t ObjPtr) 
 	{
+		Sleep(1000);
+	//	if (bCasting)
+	//	{
+	//		bCasting = false;
+	//		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+	//	}
+	///*	if (bMoveing)
+	//	{
+	//		StopMove();
+	//	}*/
+	//	// Your implementation goes here
+	//	ActiveObjPtr = ObjPtr;
+	//	SendMessage(hGameWnd, WM_LG_CALL, F_ActiveTarget, NULL);
+	//	Sleep(200);
+	//	SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
+	//	printf("ActiveTarget\n");
+	}
+	void ActiveeTarget(const int32_t ObjPtr) 
+	{
+		// Your implementation goes here
+		//printf("ActiveeTarget\n");
 		if (bCasting)
 		{
 			bCasting = false;
 			SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
 		}
-	/*	if (bMoveing)
+		/*	if (bMoveing)
 		{
-			StopMove();
+		StopMove();
 		}*/
 		// Your implementation goes here
 		ActiveObjPtr = ObjPtr;
 		SendMessage(hGameWnd, WM_LG_CALL, F_ActiveTarget, NULL);
 		Sleep(200);
 		SendMessage(hGameWnd, WM_LG_CALL, F_LeftCancel, NULL);
-	//	printf("ActiveTarget\n");
 	}
 	void ActiveAreaDoorByDungeon(const int32_t ObjPtr) 
 	{
